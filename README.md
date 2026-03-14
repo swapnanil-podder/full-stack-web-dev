@@ -1,6 +1,7 @@
 # full-stack-web-dev
 Best Websites to Learn Web Development:
 
-[text](https://developer.mozilla.org/en-US/)
-https://favicon.cc
-favicon.io
+[MDN Web Docs](https://developer.mozilla.org/en-US/)
+[W3Schools Online Web Tutorials](https://www.w3schools.com)
+[favicon.ico Generator](https://www.favicon.cc/)
+[The best Favicon Generator (completely free) - favicon.io](https://favicon.io/)
