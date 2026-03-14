@@ -9,4 +9,3 @@ Best Websites to Learn Web Development:
 [favicon.ico Generator](https://www.favicon.cc/)
 
 [The best Favicon Generator (completely free) - favicon.io](https://favicon.io/)
-
