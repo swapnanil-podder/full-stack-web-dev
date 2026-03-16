@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 4: HTML Structure - Super File</title>
+</head>
+<body>
+
+    <h1>Chapter 4: HTML Structure - Super File</h1>
+
+    <nav>
+        <h2>Table of Contents</h2>
+        <ul>
+            <li><a href="#block-vs-inline">1. Block vs Inline Elements</a></li>
+            <li><a href="#div-and-span">2. Container Div and Span</a></li>
+            <li><a href="#entities-symbols">3. HTML Entities and Symbols</a></li>
+            <li><a href="#intro-lists">4. Intro to List Items</a></li>
+            <li><a href="#unordered-lists">5. Unordered Lists</a></li>
+            <li><a href="#ordered-lists">6. Ordered Lists</a></li>
+            <li><a href="#description-lists">7. Description Lists</a></li>
+            <li><a href="#semantics">8. Semantics</a></li>
+            <li><a href="#practical-semantics">9. Practical Semantic Elements</a></li>
+            <li><a href="#kitchen-sink">10. The Creative "Kitchen Sink" (Reference)</a></li>
+        </ul>
+    </nav>
+
+    <section id="block-vs-inline">
+        <h2>1. Block vs Inline Elements</h2>
+        <span class="file-origin">Source: 1.block-vs-inline-elements.html</span>
+        <!-- block element -->
+        <p>Hello World</p>
+        <div>Hello World</div>
+        <!-- inline element -->
+        <a href="https://google.com">Google</a>
+        <a href="https://facebook.com">facebook</a>
+    </section>
+
+    <section id="div-and-span">
+        <h2>2. Container Div and Span</h2>
+        <span class="file-origin">Source: 2.container-div-and-span.html</span>
+        <!-- Div and Span are containers -->
+        <div>
+            <h2>HTML Basics</h2>
+            <p>HTML is a markup language</p>
+        </div>
+        <p>HTML is a <span>markup</span> language</p>
+    </section>
+
+    <section id="entities-symbols">
+        <h2>3. HTML Entities and Symbols</h2>
+        <span class="file-origin">Source: 3.html-entities-and-symbols.html</span>
+        <p>10 &lt; 20</p>
+        <p>10 &#60; 20</p>
+        <p>A space character &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; here</p>
+        <p>Display Euro &euro;</p>
+        <p>Copyright &copy;</p>
+    </section>
+
+    <section id="intro-lists">
+        <h2>4. Intro to List Items</h2>
+        <span class="file-origin">Source: 4.intro-to-list-items.html</span>
+        <p><em>(This file was empty in the source)</em></p>
+    </section>
+
+    <section id="unordered-lists">
+        <h2>5. Unordered Lists</h2>
+        <span class="file-origin">Source: 5.unordered-lists.html</span>
+        <ol>
+          <li>Apples</li>
+          <li>Bananas</li>
+          <li>Oranges</li>
+        </ol>
+    
+        <ul>
+          <h4>
+            <li>Fruits</li>
+          </h4>
+          <ul>
+            <li>Apples</li>
+            <li>Bananas</li>
+            <li>Oranges</li>
+          </ul>
+        </ul>
+    
+        <ul>
+          <h4>
+            <li>Vegetables</li>
+          </h4>
+          <ul>
+            <li>Carrots</li>
+            <li>Broccoli</li>
+          </ul>
+        </ul>
+    
+        <ul>
+          <li>
+            <h4>John Doe</h4>
+            <p>john@gmail.com</p>
+          </li>
+          <li>
+            <h4>Mark Doe</h4>
+            <p>mark@gmail.com</p>
+          </li>
+        </ul>
+    
+        <ul>
+          <li>
+            <h4>John Doe</h4>
+            <ul>
+                <li>john@gmail.com</li>
+            </ul>
+          </li>
+          <li>
+            <h4>Mark Doe</h4>
+            <ul>
+                <li>mark@gmail.com</li>
+            </ul>
+          </li>
+        </ul>
+    </section>
+
+    <section id="ordered-lists">
+        <h2>6. Ordered Lists</h2>
+        <span class="file-origin">Source: 6.ordered-lists.html</span>
+        <!-- Example of how to create ordered list items  -->
+        <!-- Used when the order of the items is important  -->
+        <ol>
+          <li>Preheat the oven.</li>
+          <li>Mix the ingredients.</li>
+          <li>Bake for 30 minutes.</li>
+        </ol>
+    
+        <!-- Oredered Lists Can Be Nested  -->
+        <!-- Oredered lists can be nested inside other list items to create sub-lists.  -->
+    
+        <ol>
+          <li>
+            <h4>Prepare the dough</h4>
+            <ol>
+              <li>Mix flour and water.</li>
+              <li>Knead the dough.</li>
+            </ol>
+          </li>
+          <li>
+            <h4>Bake the dough</h4>
+            <ol>
+              <li>Preheat the oven.</li>
+              <li>Bake at 350°F for 25 minutes.</li>
+            </ol>
+          </li>
+        </ol>
+    
+        <!-- Again its not necessary to have text items inside oredered list items Its can nest complex HTML elements structure -->
+    
+        <ol>
+          <li>
+            <h4>Prepare the dough</h4>
+            <ol>
+              <li> 
+                <h5>Mix flour and water.</h5> 
+                <p>Directions on mixing the flour</p> 
+              </li>
+    
+              <li>
+                <h5>Knead the dough.</h5> 
+                <p>Directions on kneading the dough</p> 
+              </li>
+            </ol>
+          </li>
+          <li>
+            <h4>Bake the dough</h4>
+            <ol>
+              <li>Preheat the oven.</li>
+              <li>Bake at 350°F for 25 minutes.</li>
+            </ol>
+          </li>
+        </ol>
+    </section>
+
+    <section id="description-lists">
+        <h2>7. Description Lists</h2>
+        <span class="file-origin">Source: 7.description-lists.html</span>
+        <dl>
+          <dt>HTML</dt>
+          <dd>A markup language for creating web pages.</dd>
+          <dt>CSS</dt>
+          <dd>
+            A style sheet language used for describing the look and formatting of a
+            document written in HTML.
+          </dd>
+        </dl>
+    
+        <ul>
+          <li>
+            <h4>Programming Languages</h4>
+            <dl>
+              <dt>Python</dt>
+              <dd>High-level, interpreted language.</dd>
+    
+              <dt>JavaScript</dt>
+              <dd>
+                Language for web development, primarily used on the client side.
+              </dd>
+            </dl>
+          </li>
+    
+          <li>
+            <h4>Web Technologies</h4>
+            <dl>
+              <dt>HTML</dt>
+              <dd>Markup language for creating web pages.</dd>
+    
+              <dt>CSS</dt>
+              <dd>Style sheet language for designing web pages.</dd>
+            </dl>
+          </li>
+        </ul>
+    </section>
+
+    <section id="semantics">
+        <h2>8. Semantics</h2>
+        <span class="file-origin">Source: 9.semantics.html</span>
+        <p><em>(This file was empty in the source)</em></p>
+    </section>
+
+    <section id="practical-semantics">
+        <h2>9. Practical Semantic Elements</h2>
+        <span class="file-origin">Source: 10.practical-semantic-elements.html</span>
+        <header>
+          <span>
+            <img height="30px" src="ico/favicon.ico" alt="Favicon" />
+          </span>
+          <nav>
+            <ul>
+              <li><a href="#">Categories</a></li>
+              <li><a href="#">Tags</a></li>
+            </ul>
+          </nav>
+        </header>
+    
+        <main>
+          <h1>The HTML Blog</h1>
+    
+          <section>
+            <article>
+              <header>
+                <h2>Blog Title One</h2>
+              </header>
+              <p>Blog Description</p>
+              <a href="#">Read Blog</a>
+            </article>
+            <article>
+              <header>
+                <h2>Blog Title Two</h2>
+              </header>
+              <p>Blog Description</p>
+              <a href="#">Read Blog</a>
+            </article>
+          </section>
+     
+          <div>
+            <section>
+              <aside>
+                <h3>Latest Blogs</h3>
+                <ul>
+                  <li><a href="#">Blog Link 1</a></li>
+                  <li><a href="#">Blog Link 2</a></li>
+                </ul>
+              </aside>
+            </section>
+          </div>
+        </main>
+    </section>
+
+    <section id="kitchen-sink">
+        <h2>10. The Creative "Kitchen Sink" (Reference)</h2>
+        <span class="file-origin">Source: 1.block-and-inline.md</span>
+        
+        <div>
+            <header>
+                <h3>The <abbr title="HyperText Markup Language">HTML</abbr> Lab</h3>
+                <nav>
+                    <ul>
+                        <li><a href="#structure">Structural</a></li>
+                        <li><a href="#interactive">Interactive</a></li>
+                    </ul>
+                </nav>
+            </header>
+
+            <main>
+                <article id="structure">
+                    <section>
+                        <header><h4>1. Typography & Semantics</h4></header>
+                        <p>
+                            In this <b>bold</b> experiment, we use <em>emphasis</em> and <strong>strong</strong> importance. 
+                            Maybe some <small>small print</small>, a <big>big</big> word, or <i>italics</i>.
+                            Chemicals like H<sub>2</sub>O or math like <var>x</var><sup>2</sup> are welcome.
+                            Check the <tt>teletype</tt> for updates.
+                        </p>
+                        
+                        <blockquote>
+                            <q>To be or not to be,</q> that is the <cite>Shakespearean</cite> question.
+                        </blockquote>
+
+                        <pre>Preformatted text:
+    Line 1
+    Line 2</pre>
+
+                        <address>Written by <a href="mailto:web@example.com">The Coder</a></address>
+                        <time datetime="2026-03-15">March 15, 2026</time>
+                    </section>
+
+                    <hr>
+
+                    <section id="interactive">
+                        <figure>
+                            <img src="https://via.placeholder.com/150" alt="Lab Logo" usemap="#labmap">
+                            <map name="labmap">
+                                <area shape="rect" coords="0,0,150,150" alt="Link" href="#">
+                            </map>
+                            <figcaption>Fig.1 - An <dfn>Image Map</dfn> container.</figcaption>
+                        </figure>
+
+                        <form action="#">
+                            <fieldset>
+                                <legend>User Interface</legend>
+                                <label for="user">Name:</label>
+                                <input type="text" id="user" name="user">
+                                
+                                <select id="options">
+                                    <option value="1">Option <samp>Alpha</samp></option>
+                                </select>
+
+                                <textarea placeholder="Write code here..."></textarea>
+                                
+                                <button type="button">Click Me!</button>
+                                <br>
+                                <output name="result">Result: 100%</output>
+                            </fieldset>
+                        </form>
+                    </section>
+
+                    <section>
+                        <h4>Technical Data</h4>
+                        <canvas id="labCanvas" width="200" height="50"></canvas>
+                        
+                        <table border="1">
+                            <tfoot><tr><td colspan="2">End of Table</td></tr></tfoot>
+                            <tbody>
+                                <tr><td><kbd>CTRL</kbd> + <kbd>S</kbd></td><td>Save</td></tr>
+                            </tbody>
+                        </table>
+
+                        <dl>
+                            <dt>The <bdo dir="rtl">Mirror</bdo></dt>
+                            <dd>Definition of a reversed string using <acronym title="Bi-Directional Override">BDO</acronym>.</dd>
+                        </dl>
+
+                        <p>(Video and Object placeholders skipped for brevity)</p>
+                    </section>
+                </article>
+            </main>
+
+            <aside>
+                <h4>Extra Info</h4>
+                <p>Check the <span>source code</span> for details.</p>
+            </aside>
+
+            <footer>
+                <p>&copy; 2026 HTML Masterclass</p>
+            </footer>
+        </div>
+    </section>
+
+    <footer>
+        <p>End of Chapter 4 Super File</p>
+    </footer>
+
+</body>
+</html>
