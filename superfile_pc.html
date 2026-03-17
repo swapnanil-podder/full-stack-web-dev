@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Ultimate HTML Superfile - Chapters 3 & 4</title>
+    <!-- Favicons and Icons (Chapter 3.15) -->
+    <link rel="icon" type="image/x-icon" href="3-html-basics/ico/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="3-html-basics/ico/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="3-html-basics/ico/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="3-html-basics/ico/favicon-16x16.png">
+    <link rel="manifest" href="3-html-basics/ico/site.webmanifest">
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; max-width: 900px; margin: 0 auto; padding: 20px; color: #333; }
+        header { border-bottom: 2px solid #333; margin-bottom: 20px; }
+        section { margin-bottom: 40px; padding: 15px; border: 1px solid #ddd; border-radius: 8px; }
+        h2 { color: #2c3e50; border-left: 5px solid #3498db; padding-left: 10px; }
+        code { background-color: #f4f4f4; padding: 2px 5px; border-radius: 4px; font-family: monospace; }
+        pre { background: #2d3436; color: #dfe6e9; padding: 15px; border-radius: 5px; overflow-x: auto; }
+        .example-box { background: #f9f9f9; border-left: 4px solid #e67e22; padding: 10px; margin: 10px 0; }
+        nav ul { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+        nav li a { text-decoration: none; background: #3498db; color: white; padding: 5px 10px; border-radius: 4px; font-size: 0.9em; }
+        nav li a:hover { background: #2980b9; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        th { background: #f2f2f2; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>HTML Mastery: Chapters 3 & 4</h1>
+        <p>Comprehensive reference for HTML Basics, Formatting, Structure, and Semantics.</p>
+        <nav>
+            <ul>
+                <li><a href="#basics">3.1 Basics</a></li>
+                <li><a href="#formatting">3.2 Formatting</a></li>
+                <li><a href="#links">3.3 Links</a></li>
+                <li><a href="#images">3.4 Images</a></li>
+                <li><a href="#quotations">3.5 Quotes & More</a></li>
+                <li><a href="#block-inline">4.1 Block vs Inline</a></li>
+                <li><a href="#containers">4.2 Containers</a></li>
+                <li><a href="#entities">4.3 Entities</a></li>
+                <li><a href="#lists">4.4 Lists</a></li>
+                <li><a href="#semantics">4.5 Semantics</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- CHAPTER 3: HTML BASICS -->
+        <section id="basics">
+            <h2>Chapter 3.1: HTML Basics (Headings, Paragraphs, Comments)</h2>
+            <p><strong>Headings:</strong> <code>&lt;h1&gt;</code> to <code>&lt;h6&gt;</code> define importance. Browsers may support <code>&lt;h7&gt;</code> but it is non-standard.</p>
+            <div class="example-box">
+                <h1>H1: Main Title</h1>
+                <h3>H3: Section Header</h3>
+                <h6>H6: Smallest standard heading</h6>
+            </div>
+            <p><strong>Paragraphs:</strong> <code>&lt;p&gt;</code> for blocks of text. Use <code>&lt;br&gt;</code> for line breaks.</p>
+            <p><strong>Horizontal Rule:</strong> <code>&lt;hr&gt;</code> for thematic breaks.</p>
+            <p><strong>Comments:</strong> <code>&lt;!-- This is a comment --&gt;</code> are not visible in the browser.</p>
+            <p><strong>Preformatted Text:</strong> <code>&lt;pre&gt;</code> preserves spaces and line breaks.</p>
+            <pre>
+    Space     matters
+    inside    pre tags.
+            </pre>
+            <p><strong>Attributes:</strong> <code>title</code> provides tooltips on hover.</p>
+            <p title="I am a tooltip!">Hover over me to see the title attribute.</p>
+        </section>
+
+        <section id="formatting">
+            <h2>Chapter 3.2: Text Formatting</h2>
+            <p>Tags that give visual or semantic meaning to text:</p>
+            <table>
+                <tr><th>Tag</th><th>Meaning</th><th>Result</th></tr>
+                <tr><td><code>&lt;b&gt;</code></td><td>Bold text (Visual)</td><td><b>Bold</b></td></tr>
+                <tr><td><code>&lt;strong&gt;</code></td><td>Strong Importance (Semantic)</td><td><strong>Strong</strong></td></tr>
+                <tr><td><code>&lt;i&gt;</code></td><td>Italic text (Visual)</td><td><i>Italic</i></td></tr>
+                <tr><td><code>&lt;em&gt;</code></td><td>Emphasized text (Semantic)</td><td><em>Emphasized</em></td></tr>
+                <tr><td><code>&lt;small&gt;</code></td><td>Smaller text</td><td><small>Smaller</small></td></tr>
+                <tr><td><code>&lt;mark&gt;</code></td><td>Highlighted text</td><td><mark>Highlighted</mark></td></tr>
+                <tr><td><code>&lt;del&gt;</code></td><td>Deleted text (Strikethrough)</td><td><del>Deleted</del></td></tr>
+                <tr><td><code>&lt;ins&gt;</code></td><td>Inserted text (Underline)</td><td><ins>Inserted</ins></td></tr>
+                <tr><td><code>&lt;sub&gt;</code></td><td>Subscript</td><td>H<sub>2</sub>O</td></tr>
+                <tr><td><code>&lt;sup&gt;</code></td><td>Superscript</td><td>X<sup>2</sup></td></tr>
+            </table>
+        </section>
+
+        <section id="links">
+            <h2>Chapter 3.3: Hyperlinks (Anchor Tag)</h2>
+            <p>The <code>&lt;a&gt;</code> tag with <code>href</code> attribute.</p>
+            <ul>
+                <li><strong>External:</strong> <code>&lt;a href="https://google.com" target="_blank"&gt;Google&lt;/a&gt;</code> (New tab)</li>
+                <li><strong>Local:</strong> <code>&lt;a href="new-page.html"&gt;Local File&lt;/a&gt;</code></li>
+                <li><strong>Email:</strong> <code>&lt;a href="mailto:hello@example.com"&gt;Email Us&lt;/a&gt;</code></li>
+                <li><strong>Phone:</strong> <code>&lt;a href="tel:+123456789"&gt;Call Us&lt;/a&gt;</code></li>
+            </ul>
+        </section>
+
+        <section id="images">
+            <h2>Chapter 3.4: Images</h2>
+            <p>The <code>&lt;img&gt;</code> tag is empty (no closing tag). Key attributes: <code>src</code> (source), <code>alt</code> (alternative text), <code>width</code>, <code>height</code>.</p>
+            <div class="example-box">
+                <img src="3-html-basics/images/david-goggins.png" alt="David Goggins" width="150">
+            </div>
+            <p>Width/Height can be in pixels (<code>width="200"</code>) or percentages (<code>width="50%"</code>).</p>
+        </section>
+
+        <section id="quotations">
+            <h2>Chapter 3.5: Quotations & Citations</h2>
+            <ul>
+                <li><code>&lt;blockquote&gt;</code>: For long quotes. Often indented. Use <code>cite</code> attribute for URL.</li>
+                <li><code>&lt;q&gt;</code>: For short inline quotes. Browsers add quotation marks.</li>
+                <li><code>&lt;abbr&gt;</code>: Abbreviation. Use <code>title</code> for full version. (e.g., <abbr title="HyperText Markup Language">HTML</abbr>)</li>
+                <li><code>&lt;address&gt;</code>: Contact info for author/owner.</li>
+                <li><code>&lt;cite&gt;</code>: Title of a creative work.</li>
+                <li><code>&lt;bdo dir="rtl"&gt;</code>: Bi-Directional Override (reverses text).</li>
+            </ul>
+        </section>
+
+        <!-- CHAPTER 4: HTML STRUCTURE -->
+        <section id="block-inline">
+            <h2>Chapter 4.1: Block vs Inline Elements</h2>
+            <p><strong>Block-level elements:</strong> Start on a new line, take full width. Examples: <code>&lt;div&gt;</code>, <code>&lt;h1-h6&gt;</code>, <code>&lt;p&gt;</code>, <code>&lt;li&gt;</code>, <code>&lt;section&gt;</code>, <code>&lt;header&gt;</code>, <code>&lt;footer&gt;</code>.</p>
+            <p><strong>Inline elements:</strong> Do not start on a new line, only take necessary width. Examples: <code>&lt;span&gt;</code>, <code>&lt;a&gt;</code>, <code>&lt;img&gt;</code>, <code>&lt;strong&gt;</code>, <code>&lt;em&gt;</code>, <code>&lt;code&gt;</code>.</p>
+        </section>
+
+        <section id="containers">
+            <h2>Chapter 4.2: Containers (Div & Span)</h2>
+            <p><strong>&lt;div&gt;:</strong> Generic block-level container. Used for layout and styling.</p>
+            <p><strong>&lt;span&gt;:</strong> Generic inline-level container. Used for styling parts of text.</p>
+            <div style="background: #eee; padding: 10px;">
+                This is a <code>&lt;div&gt;</code>. <span style="color: red; font-weight: bold;">This is a span</span> inside it.
+            </div>
+        </section>
+
+        <section id="entities">
+            <h2>Chapter 4.3: HTML Entities</h2>
+            <p>Reserved characters must be replaced by entities:</p>
+            <ul>
+                <li>Less than (<code>&lt;</code>): <code>&amp;lt;</code></li>
+                <li>Greater than (<code>&gt;</code>): <code>&amp;gt;</code></li>
+                <li>Ampersand (<code>&amp;</code>): <code>&amp;amp;</code></li>
+                <li>Copyright (<code>&copy;</code>): <code>&amp;copy;</code></li>
+                <li>Euro (<code>&euro;</code>): <code>&amp;euro;</code></li>
+                <li>Non-breaking space: <code>&amp;nbsp;</code></li>
+            </ul>
+        </section>
+
+        <section id="lists">
+            <h2>Chapter 4.4: Lists</h2>
+            <p><strong>Unordered List (<code>&lt;ul&gt;</code>):</strong> Bulleted points.</p>
+            <ul>
+                <li>Item 1</li>
+                <li>Item 2</li>
+            </ul>
+            <p><strong>Ordered List (<code>&lt;ol&gt;</code>):</strong> Numbered points.</p>
+            <ol>
+                <li>Step 1</li>
+                <li>Step 2</li>
+            </ol>
+            <p><strong>Description List (<code>&lt;dl&gt;</code>):</strong> Terms (<code>&lt;dt&gt;</code>) and descriptions (<code>&lt;dd&gt;</code>).</p>
+            <dl>
+                <dt>HTML</dt>
+                <dd>Markup language for the web.</dd>
+                <dt>CSS</dt>
+                <dd>Styles the web.</dd>
+            </dl>
+        </section>
+
+        <section id="semantics">
+            <h2>Chapter 4.5: Semantic Elements</h2>
+            <p>Elements that clearly describe their meaning to browsers and search engines.</p>
+            <table>
+                <tr><th>Tag</th><th>Description</th></tr>
+                <tr><td><code>&lt;header&gt;</code></td><td>Introductory content or nav links.</td></tr>
+                <tr><td><code>&lt;nav&gt;</code></td><td>Section for navigation links.</td></tr>
+                <tr><td><code>&lt;main&gt;</code></td><td>Main dominant content of the body.</td></tr>
+                <tr><td><code>&lt;section&gt;</code></td><td>Generic standalone section.</td></tr>
+                <tr><td><code>&lt;article&gt;</code></td><td>Independent, self-contained content (blog post).</td></tr>
+                <tr><td><code>&lt;aside&gt;</code></td><td>Sidebar or content aside from main content.</td></tr>
+                <tr><td><code>&lt;footer&gt;</code></td><td>Footer for a document or section.</td></tr>
+                <tr><td><code>&lt;figure&gt;</code></td><td>Self-contained content (images, diagrams).</td></tr>
+                <tr><td><code>&lt;figcaption&gt;</code></td><td>Caption for a figure.</td></tr>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Web Dev Masterclass | Consolidated Chapters 3 & 4</p>
+    </footer>
+
+</body>
+</html>
