@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .before-example::before{
+            content: "Before: ";
+            color: green;
+        }
+        p.after-example::after{
+            content: " After";
+            color: red;
+        }
+        p.first-letter-example::first-letter{
+            font-size: 40px;
+            color: blue;
+        }
+
+        p.first-line-example::first-line{
+            color: lightcoral;
+            font-weight: bold;
+        }
+        ul.marker-example li::marker{
+            color:purple;
+            font-size: 1.5rem;
+        }
+        
+        ul.marker-example{
+            list-style-type: georgian;
+        }
+    </style>
+</head>
+<body>
+    <p class="before-example">Text is Inserted before this element</p>
+    <p class="after-example">Text is Inserted after this element</p>
+    <p class="first-letter-example">This paragraph has larget first letter</p>
+
+    <p class="first-line-example">
+        This is an example of styling the first line of text in a paragraph. then rest of the text remains unchanged. <br>
+
+        This is the second line.
+    </p>
+    <ul class="marker-example">
+        <li>List Item 1</li>
+        <li>List Item 2</li>
+        <li>List Item 3</li>
+    </ul>
+</body>
+</html>

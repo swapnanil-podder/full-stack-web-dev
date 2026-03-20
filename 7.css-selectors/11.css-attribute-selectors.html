@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>CSS Attribute Selectors Lecture</title>
+    <style>
+      input[type] {
+        border: 2px solid yellowgreen;
+      }
+      a{
+        text-decoration: none;
+      }
+
+      input[type="text"] {
+        border: 5px inset yellowgreen;
+      }
+      input[type="text"]:hover {
+        background-color: blueviolet;
+      }
+      p[class~="highlight"] {
+        color: #ff0000;
+      }
+      /* anything that follows your pattern by '-' will only be selected */
+      [lang|="en"] {
+        border: 5px solid lightgreen;
+        border-radius: 1rem;
+      }
+      /* anything that follows your pattern will be selected */
+      a[href^="https"]{
+        color: bisque;
+      }
+      /* End with a specific value */
+      a[href$=".pdf"]::before{
+        content: "PDF: ";
+        color: lightgreen;
+        text-decoration: underline;
+      }
+      /*wildcard matching(just the attr has it)*/
+      a[href="example"]{
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>CSS Attribute Selectors</h1>
+
+    <!-- 
+      ! CSS attribute selectors allow you to target elements based on the presence, value, or pattern of an attribute. They are useful for applying styles to elements dynamically without needing additional classes or IDs, based on attributes like type, href, or src.
+    -->
+
+    <!-- Example for [attribute] -->
+    <h2>[attribute]</h2>
+    <input type="text" placeholder="This input has a 'type' attribute" />
+    <input type="password" placeholder="Another input with 'type' attribute" />
+
+    <!-- Example for [attribute=value] -->
+    <h2>[attribute=value]</h2>
+    <input type="text" placeholder="This is a text input" />
+    <input type="password" placeholder="This is a password input" />
+
+    <!-- Example for [attribute~=value] -->
+    <h2>[attribute~=value]</h2>
+    <p class="highlight">This paragraph has the class "highlight".</p>
+    <p class="highlight special">
+      This paragraph has the class "highlight" and "special".
+    </p>
+
+    <!-- Example for [attribute|=value] -->
+    <h2>[attribute|=value]</h2>
+    <p lang="en">This paragraph is in English.</p>
+    <p lang="en-US">This paragraph is in American English (en-US).</p>
+
+    <!-- Example for [attribute^=value] -->
+    <h2>[attribute^=value]</h2>
+    <a href="https://www.example.com">Secure link (starts with https)</a>
+    <a href="http://www.example.com">Insecure link (starts with http)</a>
+
+    <!-- Example for [attribute$=value] -->
+    <h2>[attribute$=value]</h2>
+    <a href="document.pdf">PDF Document (ends with .pdf)</a>
+    <a href="document.docx">Word Document (does not end with .pdf)</a>
+
+    <!-- Example for [attribute*=value] -->
+    <h2>[attribute*=value]</h2>
+    <a href="https://www.example.com">Link contains 'example'</a>
+    <a href="https://www.another.com">Link does not contain 'example'</a>
+  </body>
+</html>

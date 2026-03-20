@@ -1,0 +1,493 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A combined HTML reference from chapter 3 and chapter 4, plus important missing HTML topics."
+    />
+    <meta
+      name="keywords"
+      content="HTML, headings, paragraphs, lists, links, images, semantics, tables, forms, multimedia"
+    />
+    <meta name="author" content="Wintershell" />
+    <title>Super HTML File</title>
+    <link rel="icon" type="image/x-icon" href="3-html-basics/ico/favicon.ico" />
+  </head>
+  <body>
+    <header>
+      <h1>Super HTML File</h1>
+      <p>
+        This file combines the main lessons from chapter 3 and chapter 4 and
+        also fills the missing gaps in HTML.
+      </p>
+
+      <nav>
+        <h2>Quick Navigation</h2>
+        <ul>
+          <li><a href="#document">Document Structure</a></li>
+          <li><a href="#text">Text Elements</a></li>
+          <li><a href="#links-images">Links and Images</a></li>
+          <li><a href="#containers">Block, Inline, Div, Span</a></li>
+          <li><a href="#entities">Entities and Symbols</a></li>
+          <li><a href="#lists">Lists</a></li>
+          <li><a href="#semantic">Semantic HTML</a></li>
+          <li><a href="#tables">Tables</a></li>
+          <li><a href="#forms">Forms</a></li>
+          <li><a href="#multimedia">Multimedia</a></li>
+          <li><a href="#notes">Important Notes</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section id="document">
+        <h2>1. Document Structure and Head Meta</h2>
+        <p>
+          Every HTML page usually starts with <code>&lt;!doctype html&gt;</code>
+          and then the root <code>&lt;html&gt;</code> element.
+        </p>
+
+        <article>
+          <h3>Main Parts of an HTML Document</h3>
+          <ul>
+            <li><code>&lt;html lang="en"&gt;</code> sets the document language.</li>
+            <li><code>&lt;head&gt;</code> stores metadata for the browser and search engines.</li>
+            <li><code>&lt;body&gt;</code> stores the visible content of the page.</li>
+          </ul>
+        </article>
+
+        <article>
+          <h3>Useful Head Elements</h3>
+          <ul>
+            <li><code>&lt;meta charset="UTF-8"&gt;</code> supports many characters and symbols.</li>
+            <li><code>&lt;meta name="viewport"&gt;</code> helps pages behave better on mobile.</li>
+            <li><code>&lt;title&gt;</code> sets the browser tab title.</li>
+            <li><code>&lt;meta name="description"&gt;</code> describes the page.</li>
+            <li><code>&lt;link rel="icon"&gt;</code> sets a favicon.</li>
+          </ul>
+        </article>
+
+        <article>
+          <h3>Example Structure</h3>
+          <pre>
+&lt;!doctype html&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;meta charset="UTF-8" /&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;
+    &lt;title&gt;My Page&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Hello HTML&lt;/h1&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+          </pre>
+        </article>
+      </section>
+
+      <section id="text">
+        <h2>2. Text Elements</h2>
+
+        <article>
+          <h3>Headings and Paragraphs</h3>
+          <h1>Heading 1</h1>
+          <h2>Heading 2</h2>
+          <h3>Heading 3</h3>
+          <h4>Heading 4</h4>
+          <h5>Heading 5</h5>
+          <h6>Heading 6</h6>
+          <p>This is a normal paragraph.</p>
+          <p>
+            Use headings from <code>h1</code> to <code>h6</code>. There is no
+            valid <code>h7</code> tag.
+          </p>
+        </article>
+
+        <article>
+          <h3>Breaks, Rules, and Preformatted Text</h3>
+          <p>This line ends here.<br />This line starts after a line break.</p>
+          <hr />
+          <pre>
+This text keeps
+its spacing
+and line breaks.
+          </pre>
+        </article>
+
+        <article>
+          <h3>Text Formatting</h3>
+          <p><b>Bold text</b></p>
+          <p><strong>Strong importance</strong></p>
+          <p><i>Italic text</i></p>
+          <p><em>Emphasized text</em></p>
+          <p><small>Small text</small></p>
+          <p>Water is H<sub>2</sub>O.</p>
+          <p>2<sup>3</sup> = 8</p>
+          <p>My old favorite color was <del>blue</del> and now it is <ins>green</ins>.</p>
+          <p><mark>Marked text</mark></p>
+        </article>
+
+        <article>
+          <h3>Comments and Quotations</h3>
+          <!-- This is an HTML comment. -->
+          <blockquote cite="https://developer.mozilla.org/">
+            HTML is used to structure content on the web.
+          </blockquote>
+          <p>Short quote example: <q>Practice makes progress.</q></p>
+          <p><abbr title="HyperText Markup Language">HTML</abbr> is the standard markup language for web pages.</p>
+          <p><bdo dir="rtl">This sentence is reversed.</bdo></p>
+        </article>
+      </section>
+
+      <section id="links-images">
+        <h2>3. Links and Images</h2>
+
+        <article>
+          <h3>Anchor Tag</h3>
+          <ul>
+            <li><a href="3-html-basics/12.new-page.html">Open another local page</a></li>
+            <li><a href="https://developer.mozilla.org/" target="_blank" rel="noopener noreferrer">Open MDN in a new tab</a></li>
+            <li><a href="mailto:hello@example.com">Send an email</a></li>
+            <li><a href="tel:+123456789">Call a phone number</a></li>
+            <li><a href="#document">Jump to document section</a></li>
+          </ul>
+        </article>
+
+        <article>
+          <h3>Images</h3>
+          <p>Always try to use the <code>alt</code> attribute for accessibility.</p>
+          <img
+            src="3-html-basics/images/david-goggins.png"
+            alt="David Goggins portrait"
+            width="220"
+          />
+          <figure>
+            <img
+              src="4-html-structure/images/david-goggins.png"
+              alt="Another David Goggins image"
+              width="220"
+            />
+            <figcaption>Example image with a caption using figure and figcaption.</figcaption>
+          </figure>
+        </article>
+      </section>
+
+      <section id="containers">
+        <h2>4. Block, Inline, Div, and Span</h2>
+
+        <article>
+          <h3>Block Elements</h3>
+          <p>Block elements usually start on a new line and take up full width.</p>
+          <div>
+            <p>Examples: <code>div</code>, <code>p</code>, <code>section</code>, <code>article</code>, <code>ul</code>.</p>
+          </div>
+        </article>
+
+        <article>
+          <h3>Inline Elements</h3>
+          <p>
+            Inline elements usually stay in the same line and only take the
+            space they need. Examples:
+            <span>span</span>,
+            <a href="https://example.com">anchor</a>,
+            <strong>strong</strong>,
+            <em>em</em>.
+          </p>
+        </article>
+
+        <article>
+          <h3>Div and Span</h3>
+          <div>
+            <h4>Div Example</h4>
+            <p>A <code>div</code> is a generic block container.</p>
+          </div>
+          <p>
+            HTML is a <span>markup language</span> and
+            <span>span</span> is a generic inline container.
+          </p>
+        </article>
+      </section>
+
+      <section id="entities">
+        <h2>5. HTML Entities and Symbols</h2>
+        <p>Use entities when you need reserved characters or special symbols.</p>
+        <ul>
+          <li><code>&amp;lt;</code> shows &lt;</li>
+          <li><code>&amp;gt;</code> shows &gt;</li>
+          <li><code>&amp;amp;</code> shows &amp;</li>
+          <li><code>&amp;copy;</code> shows &copy;</li>
+          <li><code>&amp;euro;</code> shows &euro;</li>
+          <li><code>&amp;nbsp;</code> creates a non-breaking space.</li>
+        </ul>
+      </section>
+
+      <section id="lists">
+        <h2>6. Lists</h2>
+
+        <article>
+          <h3>Unordered List</h3>
+          <ul>
+            <li>Apple</li>
+            <li>Banana</li>
+            <li>Orange</li>
+          </ul>
+        </article>
+
+        <article>
+          <h3>Ordered List</h3>
+          <ol>
+            <li>Wake up</li>
+            <li>Study HTML</li>
+            <li>Practice by building pages</li>
+          </ol>
+        </article>
+
+        <article>
+          <h3>Nested List</h3>
+          <ul>
+            <li>
+              Frontend
+              <ul>
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>JavaScript</li>
+              </ul>
+            </li>
+            <li>
+              Backend
+              <ul>
+                <li>Node.js</li>
+                <li>Databases</li>
+              </ul>
+            </li>
+          </ul>
+        </article>
+
+        <article>
+          <h3>Description List</h3>
+          <dl>
+            <dt>HTML</dt>
+            <dd>Used to structure web content.</dd>
+            <dt>CSS</dt>
+            <dd>Used to style web content.</dd>
+            <dt>JavaScript</dt>
+            <dd>Used to add behavior and interactivity.</dd>
+          </dl>
+        </article>
+      </section>
+
+      <section id="semantic">
+        <h2>7. Semantic HTML</h2>
+        <p>
+          Semantic elements describe the meaning of content instead of using
+          only generic containers.
+        </p>
+
+        <article>
+          <h3>Common Semantic Tags</h3>
+          <ul>
+            <li><code>header</code> for introductory content.</li>
+            <li><code>nav</code> for navigation links.</li>
+            <li><code>main</code> for the main content of the page.</li>
+            <li><code>section</code> for grouped content.</li>
+            <li><code>article</code> for self-contained content.</li>
+            <li><code>aside</code> for side content.</li>
+            <li><code>footer</code> for bottom information.</li>
+          </ul>
+        </article>
+
+        <article>
+          <h3>Mini Semantic Layout Example</h3>
+          <section>
+            <header>
+              <h4>Blog Header</h4>
+            </header>
+            <article>
+              <h5>Blog Post Title</h5>
+              <p>This is a small article inside a section.</p>
+            </article>
+            <aside>
+              <p>This aside can hold related links or notes.</p>
+            </aside>
+            <footer>
+              <p>Section footer information.</p>
+            </footer>
+          </section>
+        </article>
+      </section>
+
+      <section id="tables">
+        <h2>8. Tables</h2>
+        <p>Tables are used for tabular data, not for page layout.</p>
+
+        <table border="1">
+          <caption>
+            Student Progress Table
+          </caption>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Topic</th>
+              <th>Completed</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Rahim</td>
+              <td>HTML Basics</td>
+              <td>Yes</td>
+            </tr>
+            <tr>
+              <td>Karim</td>
+              <td>Lists and Semantics</td>
+              <td>Yes</td>
+            </tr>
+            <tr>
+              <td>Mina</td>
+              <td>Forms</td>
+              <td>No</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="3">End of table</td>
+            </tr>
+          </tfoot>
+        </table>
+      </section>
+
+      <section id="forms">
+        <h2>9. Forms</h2>
+        <p>Forms collect user input and send it somewhere using the <code>action</code> attribute.</p>
+
+        <form action="#" method="post">
+          <fieldset>
+            <legend>Registration Form</legend>
+
+            <p>
+              <label for="name">Full Name:</label><br />
+              <input type="text" id="name" name="name" placeholder="Enter your name" />
+            </p>
+
+            <p>
+              <label for="email">Email:</label><br />
+              <input type="email" id="email" name="email" placeholder="Enter your email" />
+            </p>
+
+            <p>
+              <label for="password">Password:</label><br />
+              <input type="password" id="password" name="password" />
+            </p>
+
+            <p>
+              <label for="age">Age:</label><br />
+              <input type="number" id="age" name="age" min="1" max="120" />
+            </p>
+
+            <p>
+              <label for="birthdate">Birth Date:</label><br />
+              <input type="date" id="birthdate" name="birthdate" />
+            </p>
+
+            <p>
+              Gender:<br />
+              <input type="radio" id="male" name="gender" value="male" />
+              <label for="male">Male</label>
+              <input type="radio" id="female" name="gender" value="female" />
+              <label for="female">Female</label>
+            </p>
+
+            <p>
+              Skills:<br />
+              <input type="checkbox" id="html" name="skills" value="html" />
+              <label for="html">HTML</label>
+              <input type="checkbox" id="css" name="skills" value="css" />
+              <label for="css">CSS</label>
+              <input type="checkbox" id="js" name="skills" value="javascript" />
+              <label for="js">JavaScript</label>
+            </p>
+
+            <p>
+              <label for="country">Country:</label><br />
+              <select id="country" name="country">
+                <option value="">Select one</option>
+                <option value="bangladesh">Bangladesh</option>
+                <option value="india">India</option>
+                <option value="nepal">Nepal</option>
+              </select>
+            </p>
+
+            <p>
+              <label for="message">Message:</label><br />
+              <textarea
+                id="message"
+                name="message"
+                rows="5"
+                cols="40"
+                placeholder="Write something here"
+              ></textarea>
+            </p>
+
+            <p>
+              <button type="submit">Submit</button>
+              <button type="reset">Reset</button>
+            </p>
+          </fieldset>
+        </form>
+      </section>
+
+      <section id="multimedia">
+        <h2>10. Multimedia</h2>
+
+        <article>
+          <h3>Audio</h3>
+          <audio controls>
+            <source src="media/sample-audio.mp3" type="audio/mpeg" />
+            Your browser does not support the audio element.
+          </audio>
+          <p>This is how audio is embedded. The file path is just an example.</p>
+        </article>
+
+        <article>
+          <h3>Video</h3>
+          <video controls width="320">
+            <source src="media/sample-video.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+          <p>This is how video is embedded. The file path is just an example.</p>
+        </article>
+
+        <article>
+          <h3>Embedded Content</h3>
+          <iframe
+            src="https://example.com"
+            title="Example embedded page"
+            width="400"
+            height="200"
+          ></iframe>
+          <p><code>iframe</code> can embed another page inside your page.</p>
+        </article>
+      </section>
+
+      <section id="notes">
+        <h2>11. Important Notes and Best Practices</h2>
+        <ul>
+          <li>Use semantic tags when possible instead of too many generic divs.</li>
+          <li>Always add <code>alt</code> text for meaningful images.</li>
+          <li>Use forms with proper labels for better accessibility.</li>
+          <li>Use tables only for data, not page layout.</li>
+          <li>Use heading order properly, usually one main <code>h1</code> per page.</li>
+          <li>Use comments only when they add value.</li>
+          <li>Always close elements properly and keep indentation clean.</li>
+          <li>Prefer <code>strong</code> and <code>em</code> when meaning matters.</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer>
+      <p>End of the super HTML study file.</p>
+    </footer>
+  </body>
+</html>
