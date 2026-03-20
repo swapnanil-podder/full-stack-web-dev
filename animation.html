@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Animation</title>
+    <style>
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      #box {
+        background-color: red;
+        border: 3px solid blue;
+
+        height: 250px;
+        width: 250px;
+        font-size: 200px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        animation: myScale 3s 0.0001s infinite;
+        animation-timing-function: ease-in-out;
+      }
+      @keyframes mySlide {
+        from {
+          margin-left: 0%;
+        }
+        to {
+          margin-left: 100%;
+        }
+      }
+      @keyframes myRotate {
+        100% {
+          transform: rotateZ(360deg);
+        }
+      }
+      @keyframes myOpacity {
+        50% {
+          opacity: 0;
+        }
+      }
+      @keyframes myScale {
+        0%,
+        100% {
+          /* Normal size */
+          transform: perspective(500px) scale3d(1, 1, 1);
+        }
+        50% {
+          /* Scale up and move forward in Z-space */
+          transform: perspective(500px) scale3d(1.2, 1.2, 1.5) rotateX(10deg);
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+      }
+      @keyframes myColorChange {
+        0% {
+          background-color: red;
+        }
+        20% {
+          background-color: purple;
+        }
+        50% {
+          background-color: greenyellow;
+        }
+        60% {
+          background-color: skyblue;
+        }
+        80% {
+          background-color: orchid;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="box">Hi</div>
+  </body>
+</html>

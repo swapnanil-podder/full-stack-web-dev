@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .italic {
+        font-style: italic;
+      }
+
+      .oblique {
+        font-style: oblique;
+      }
+      .small-caps {
+        font-variant: small-caps;
+      }
+
+      .font-shorthand {
+        font: italic small-caps bold 1.5rem "Monospace";
+        /* what is the sequence when we are trying to declare a font shortcut? */
+      }
+    </style>
+  </head>
+  <body>
+    <p class="italic">Italic text</p>
+    <p class="oblique">Oblique text</p>
+    <p class="small-caps">Small-caps text</p>
+    <p style="font-size: 20px">Font Size in px 20px</p>
+    <p style="font-size: 2em">Font Size in px 2em</p>
+    <p style="font-size: 1.5rem">Font Size in px 1.5rem</p>
+    <p style="font-weight: bold">Font Size in bold</p>
+    <p style="font-weight: lighter">Font Size in lighter</p>
+    <p class="font-shorthand">Shorthand style size Arial</p>
+  </body>
+</html>

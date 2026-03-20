@@ -1,0 +1,2240 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chapter 6 and 7 Adaptive Quiz</title>
+    <style>
+      :root {
+        --bg: #0f172a;
+        --panel: #1e293b;
+        --panel-2: #334155;
+        --ink: #f1f5f9;
+        --muted: #94a3b8;
+        --line: #475569;
+        --easy: #4ade80;
+        --medium: #fbbf24;
+        --hard: #f87171;
+        --accent: #3b82f6;
+        --accent-2: #60a5fa;
+        --good: #10b981;
+        --bad: #ef4444;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at top left, rgba(59, 130, 246, 0.15), transparent 40%),
+          linear-gradient(160deg, #0f172a 0%, #1e293b 100%);
+        min-height: 100vh;
+      }
+
+      .shell {
+        width: min(1100px, calc(100% - 2rem));
+        margin: 2rem auto 3rem;
+      }
+
+      .hero,
+      .panel,
+      .results,
+      .comparison-box,
+      .intro-box {
+        background: rgba(30, 41, 59, 0.8);
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        box-shadow: 0 20px 45px rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(10px);
+      }
+
+      .hero {
+        padding: 1.75rem;
+        margin-bottom: 1.25rem;
+      }
+
+      h1,
+      h2,
+      h3 {
+        margin-top: 0;
+        color: #fff;
+      }
+
+      .lede {
+        color: var(--muted);
+        max-width: 70ch;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1rem;
+        margin: 1.2rem 0;
+      }
+
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+      }
+
+      label,
+      .small-label {
+        font-size: 0.95rem;
+        color: var(--muted);
+      }
+
+      select,
+      input[type="number"],
+      input[type="file"],
+      button {
+        font: inherit;
+      }
+
+      select,
+      input[type="number"],
+      input[type="file"] {
+        width: 100%;
+        padding: 0.8rem 0.9rem;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: #334155;
+        color: #fff;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+      }
+
+      button {
+        border: 0;
+        border-radius: 999px;
+        padding: 0.8rem 1.2rem;
+        cursor: pointer;
+        transition: transform 0.18s ease, opacity 0.18s ease;
+      }
+
+      button:hover {
+        transform: translateY(-1px);
+      }
+
+      button.primary {
+        background: var(--accent);
+        color: #fff;
+      }
+
+      button.secondary {
+        background: var(--panel-2);
+        color: var(--ink);
+      }
+
+      button.ghost {
+        background: transparent;
+        border: 1px solid var(--line);
+        color: var(--ink);
+      }
+
+      button:disabled {
+        cursor: not-allowed;
+        opacity: 0.55;
+        transform: none;
+      }
+
+      .intro-box {
+        padding: 1.25rem;
+        margin-bottom: 1.25rem;
+      }
+
+      .intro-list,
+      .meta-list,
+      .results-list {
+        display: grid;
+        gap: 0.75rem;
+      }
+
+      .panel {
+        padding: 1.5rem;
+        display: none;
+      }
+
+      .panel.active,
+      .results.active {
+        display: block;
+      }
+
+      .top-row,
+      .status-row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .progress-wrap {
+        margin: 1rem 0 1.25rem;
+      }
+
+      .ascii-bar {
+        font-family: "Courier New", monospace;
+        padding: 0.7rem 0.9rem;
+        background: #0f172a;
+        color: #3b82f6;
+        border-radius: 12px;
+        letter-spacing: 0.04em;
+        border: 1px solid var(--line);
+      }
+
+      .meter {
+        height: 10px;
+        border-radius: 999px;
+        background: #334155;
+        overflow: hidden;
+        margin-top: 0.55rem;
+      }
+
+      .meter-fill {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, var(--accent), var(--accent-2));
+        transition: width 0.3s ease;
+      }
+
+      .badge-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+        margin-bottom: 1rem;
+      }
+
+      .badge {
+        border-radius: 999px;
+        padding: 0.45rem 0.75rem;
+        background: var(--panel-2);
+        color: var(--ink);
+        font-size: 0.92rem;
+        border: 1px solid var(--line);
+      }
+
+      .badge.easy {
+        background: rgba(74, 222, 128, 0.15);
+        color: var(--easy);
+        border-color: rgba(74, 222, 128, 0.3);
+      }
+
+      .badge.medium {
+        background: rgba(251, 191, 36, 0.15);
+        color: var(--medium);
+        border-color: rgba(251, 191, 36, 0.3);
+      }
+
+      .badge.hard {
+        background: rgba(248, 113, 113, 0.15);
+        color: var(--hard);
+        border-color: rgba(248, 113, 113, 0.3);
+      }
+
+      .question-card {
+        padding: 1.1rem;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: rgba(30, 41, 59, 0.5);
+      }
+
+      .question-text {
+        font-size: 1.14rem;
+        line-height: 1.6;
+        color: #fff;
+      }
+
+      .code-block {
+        background: #000;
+        color: #60a5fa;
+        padding: 0.9rem;
+        border-radius: 14px;
+        overflow-x: auto;
+        font-family: "Courier New", monospace;
+        white-space: pre-wrap;
+        margin: 0.8rem 0;
+        border: 1px solid #334155;
+      }
+
+      .options {
+        display: grid;
+        gap: 0.8rem;
+        margin: 1rem 0;
+      }
+
+      .option {
+        width: 100%;
+        text-align: left;
+        background: #334155;
+        border: 1px solid var(--line);
+        color: var(--ink);
+        border-radius: 14px;
+        padding: 0.95rem 1rem;
+      }
+
+      .option:hover:not(:disabled) {
+        background: #475569;
+        border-color: var(--accent);
+      }
+
+      .option.correct {
+        background: rgba(16, 185, 129, 0.2);
+        border-color: var(--good);
+        color: var(--good);
+      }
+
+      .option.wrong {
+        background: rgba(239, 68, 68, 0.2);
+        border-color: var(--bad);
+        color: var(--bad);
+      }
+
+      .option.dimmed {
+        opacity: 0.5;
+      }
+
+      .feedback {
+        display: none;
+        margin-top: 1rem;
+        padding: 1rem;
+        border-radius: 16px;
+        border: 1px solid var(--line);
+        background: #1e293b;
+      }
+
+      .feedback.good {
+        display: block;
+        border-color: var(--good);
+        background: rgba(16, 185, 129, 0.1);
+      }
+
+      .feedback.bad {
+        display: block;
+        border-color: var(--bad);
+        background: rgba(239, 68, 68, 0.1);
+      }
+
+      .comparison-box {
+        display: none;
+        margin-top: 1rem;
+        padding: 1rem;
+      }
+
+      .comparison-box.active {
+        display: block;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 0.8rem;
+      }
+
+      th,
+      td {
+        border: 1px solid var(--line);
+        padding: 0.75rem;
+        vertical-align: top;
+        text-align: left;
+      }
+
+      th {
+        background: #334155;
+        color: #fff;
+      }
+
+      .result-hero {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 1rem;
+        margin: 1rem 0 1.2rem;
+      }
+
+      .stat {
+        background: rgba(51, 65, 85, 0.5);
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 1rem;
+      }
+
+      .stat strong {
+        display: block;
+        font-size: 1.4rem;
+        color: #fff;
+      }
+
+      .results {
+        display: none;
+        padding: 1.5rem;
+        margin-top: 1.25rem;
+      }
+
+      .topic-row {
+        display: grid;
+        grid-template-columns: minmax(120px, 180px) 1fr 70px;
+        gap: 0.7rem;
+        align-items: center;
+      }
+
+      .topic-bar {
+        height: 12px;
+        border-radius: 999px;
+        background: #334155;
+        overflow: hidden;
+      }
+
+      .topic-bar > span {
+        display: block;
+        height: 100%;
+        background: linear-gradient(90deg, var(--good), var(--accent));
+      }
+
+      .muted {
+        color: var(--muted);
+      }
+
+      .warning {
+        color: var(--hard);
+      }
+
+      .good-text {
+        color: var(--good);
+      }
+
+      @media (max-width: 640px) {
+        .shell {
+          width: min(100% - 1rem, 1100px);
+          margin-top: 1rem;
+        }
+
+        .hero,
+        .panel,
+        .results,
+        .intro-box {
+          padding: 1rem;
+          border-radius: 16px;
+        }
+
+        .topic-row {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero">
+        <h1>Chapter 6 and 7 Adaptive Quiz</h1>
+        <p class="lede">
+          Covers CSS basics and CSS selectors from your local lessons, with hybrid
+          HTML plus CSS questions that connect back to earlier HTML chapters.
+        </p>
+
+        <div class="grid">
+          <div class="field">
+            <label for="questionCount">How many questions?</label>
+            <input id="questionCount" type="number" min="5" max="50" value="20" />
+          </div>
+          <div class="field">
+            <label for="modeSelect">Mode</label>
+            <select id="modeSelect">
+              <option value="standard">Standard Mode</option>
+              <option value="blitz">Blitz Mode</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="difficultySelect">Starting difficulty</label>
+            <select id="difficultySelect">
+              <option value="easy">Easy</option>
+              <option value="medium">Medium</option>
+              <option value="hard">Hard if unlocked</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="resumeFile">Import saved state</label>
+            <input id="resumeFile" type="file" accept=".dat,.txt,.json" />
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="primary" id="startBtn">Start quiz</button>
+          <button class="secondary" id="resumeLocalBtn">Resume local save</button>
+          <button class="ghost" id="exportBtn" disabled>Export save file</button>
+          <button class="ghost" id="resetBtn">Clear saved progress</button>
+        </div>
+      </section>
+
+      <section class="intro-box">
+        <h2>Superfile and Hybrid Refresh</h2>
+        <div class="intro-list muted">
+          <div>
+            Some questions mix chapter 6 and 7 CSS with earlier HTML ideas like
+            semantic tags, links, image attributes, lists, block vs inline
+            elements, and generic containers like `div` and `span`.
+          </div>
+          <div>
+            The earlier `superfile.html` goes beyond the old chapter files by
+            also covering forms, tables, multimedia, `figure` and `figcaption`,
+            and useful head metadata. If a hybrid question touches one of those,
+            the explanation will teach it before judging the CSS part.
+          </div>
+          <div>
+            Hard questions stay locked until you build a correct streak. If you
+            struggle on a topic, the quiz will bias upcoming questions toward that
+            topic so you get more practice where it matters.
+          </div>
+        </div>
+      </section>
+
+      <section id="quizPanel" class="panel">
+        <div class="top-row">
+          <div>
+            <h2 id="questionTitle">Question</h2>
+            <div class="muted" id="questionMeta"></div>
+          </div>
+          <div class="status-row">
+            <div class="badge" id="modeBadge">Mode: Standard</div>
+            <div class="badge" id="streakBadge">Streak: 0</div>
+            <div class="badge" id="lockBadge">Hard locked</div>
+          </div>
+        </div>
+
+        <div class="progress-wrap">
+          <div class="ascii-bar" id="asciiBar">[--------------------] 0%</div>
+          <div class="meter"><div class="meter-fill" id="meterFill"></div></div>
+        </div>
+
+        <div class="badge-row">
+          <div class="badge" id="topicBadge">Topic</div>
+          <div class="badge easy" id="difficultyBadge">Easy</div>
+          <div class="badge" id="timerBadge">Time: 0.0s</div>
+          <div class="badge" id="hesitationBadge">Hesitation: calm</div>
+        </div>
+
+        <article class="question-card">
+          <div class="question-text" id="questionText"></div>
+          <pre class="code-block" id="questionCode" hidden></pre>
+          <div class="options" id="optionsWrap"></div>
+
+          <div class="actions">
+            <button class="secondary" id="hintBtn">Show hint</button>
+            <button class="ghost" id="saveBtn">Save progress</button>
+            <button class="primary" id="nextBtn" disabled>Next question</button>
+          </div>
+
+          <div class="feedback" id="hintBox"></div>
+          <div class="feedback" id="feedbackBox"></div>
+          <div class="comparison-box" id="comparisonBox"></div>
+        </article>
+      </section>
+
+      <section id="resultsPanel" class="results">
+        <h2>Final Results</h2>
+        <p id="resultsSummary" class="muted"></p>
+        <div class="result-hero" id="resultHero"></div>
+
+        <div class="results-list">
+          <div class="panel active" style="padding: 1rem;">
+            <h3>Topic Mastery Percentage</h3>
+            <div id="topicMastery"></div>
+          </div>
+
+          <div class="panel active" style="padding: 1rem;">
+            <h3>Question Review</h3>
+            <div id="reviewList"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const quizBank = [
+        {
+          id: "CH6-COL-001",
+          topic: "colors",
+          difficulty: "easy",
+          type: "standard",
+          question: "Which CSS property changes the text color of an element?",
+          options: ["background-color", "border-color", "color", "text-style"],
+          answer: 2,
+          hint: "It directly styles the letters, not the background.",
+          explanation:
+            "The `color` property controls the foreground text color. `background-color` paints behind the content, and `border-color` affects the edge.",
+          comparison: {
+            triggerOption: 0,
+            title: "color vs background-color",
+            rows: [
+              ["color", "Changes the text or foreground color"],
+              ["background-color", "Fills the area behind the content"]
+            ]
+          }
+        },
+        {
+          id: "CH6-COL-002",
+          topic: "colors",
+          difficulty: "easy",
+          type: "standard",
+          question: "Which value format includes red, green, blue, and transparency together?",
+          options: ["rgb()", "rgba()", "hsl()", "#hex"],
+          answer: 1,
+          hint: "The extra letter stands for alpha.",
+          explanation:
+            "`rgba()` adds an alpha channel for transparency. `rgb()` has no alpha. In your lesson file, `rgba(175, 38, 38, 0.534)` is an example.",
+          comparison: {
+            triggerOption: 0,
+            title: "rgb() vs rgba()",
+            rows: [
+              ["rgb()", "Red, green, blue only"],
+              ["rgba()", "Red, green, blue, plus alpha transparency"]
+            ]
+          }
+        },
+        {
+          id: "CH6-COL-003",
+          topic: "colors",
+          difficulty: "easy",
+          type: "standard",
+          question: "Which border style was used with `2px dashed rgb(14, 17, 182)` in chapter 6?",
+          options: ["solid", "groove", "dashed", "double"],
+          answer: 2,
+          hint: "The border appears as broken segments.",
+          explanation:
+            "`dashed` creates separated line segments. The lesson contrasts it with `solid`, `dotted`, and `groove`.",
+          comparison: {
+            triggerOption: 3,
+            title: "dashed vs double",
+            rows: [
+              ["dashed", "Broken segments with gaps"],
+              ["double", "Two parallel lines"]
+            ]
+          }
+        },
+        {
+          id: "CH6-TXT-001",
+          topic: "text-formatting",
+          difficulty: "easy",
+          type: "standard",
+          question: "Which `text-align` value spreads lines so both left and right edges look even?",
+          options: ["center", "justify", "right", "inherit"],
+          answer: 1,
+          hint: "It is common in articles and newspapers.",
+          explanation:
+            "`text-align: justify` stretches spacing so lines align to both sides. Your lesson compares it with `left`, `center`, and `right`.",
+          comparison: {
+            triggerOption: 0,
+            title: "center vs justify",
+            rows: [
+              ["center", "Centers each line as a block"],
+              ["justify", "Adjusts spacing so lines touch both edges"]
+            ]
+          }
+        },
+        {
+          id: "CH6-TXT-002",
+          topic: "text-formatting",
+          difficulty: "easy",
+          type: "standard",
+          question: "Which property draws an underline, overline, or line-through decoration?",
+          options: ["font-style", "text-decoration-line", "text-transform", "line-height"],
+          answer: 1,
+          hint: "It names the kind of decoration line itself.",
+          explanation:
+            "`text-decoration-line` picks the line type such as `underline`, `overline`, or `line-through`. Other decoration details can be controlled with color and style properties.",
+          comparison: {
+            triggerOption: 2,
+            title: "text-decoration-line vs text-transform",
+            rows: [
+              ["text-decoration-line", "Adds a visual line like underline"],
+              ["text-transform", "Changes letter casing like uppercase"]
+            ]
+          }
+        },
+        {
+          id: "CH6-TXT-003",
+          topic: "text-formatting",
+          difficulty: "easy",
+          type: "standard",
+          question: "What does `text-transform: uppercase` do?",
+          options: [
+            "Makes only the first letter large",
+            "Changes letters to all capitals",
+            "Adds more spacing between words",
+            "Turns text bold"
+          ],
+          answer: 1,
+          hint: "This changes case, not size or weight.",
+          explanation:
+            "`uppercase` converts letters to capitals. It does not make the font bigger or bolder by itself.",
+          comparison: {
+            triggerOption: 0,
+            title: "uppercase vs ::first-letter",
+            rows: [
+              ["text-transform: uppercase", "Changes all letters to capitals"],
+              ["::first-letter", "Targets only the first letter for styling"]
+            ]
+          }
+        },
+        {
+          id: "CH6-TXT-004",
+          topic: "spacing",
+          difficulty: "easy",
+          type: "standard",
+          question: "Which property increases or decreases the space between individual letters?",
+          options: ["word-spacing", "letter-spacing", "text-indent", "line-height"],
+          answer: 1,
+          hint: "It targets characters, not whole words or lines.",
+          explanation:
+            "`letter-spacing` adjusts spacing between characters. `word-spacing` is for whole words, and `line-height` is for vertical line spacing.",
+          comparison: {
+            triggerOption: 0,
+            title: "word-spacing vs letter-spacing",
+            rows: [
+              ["word-spacing", "Changes space between words"],
+              ["letter-spacing", "Changes space between characters"]
+            ]
+          }
+        },
+        {
+          id: "CH6-UNIT-001",
+          topic: "units",
+          difficulty: "easy",
+          type: "standard",
+          question: "In the chapter 6 units file, what does `width: 50%` depend on?",
+          options: [
+            "The viewport width only",
+            "The parent element width",
+            "The root font size",
+            "The line height"
+          ],
+          answer: 1,
+          hint: "Percentages are relative to a containing box in this context.",
+          explanation:
+            "`50%` width is relative to the containing block, usually the parent element's width. That is why it behaves differently from viewport units.",
+          comparison: {
+            triggerOption: 0,
+            title: "% vs vw",
+            rows: [
+              ["%", "Usually relative to the parent or containing block"],
+              ["vw", "Relative to viewport width"]
+            ]
+          }
+        },
+        {
+          id: "CH6-UNIT-002",
+          topic: "units",
+          difficulty: "easy",
+          type: "standard",
+          question: "What is `vh` short for?",
+          options: ["variable height", "viewport height", "visual height", "vertical helper"],
+          answer: 1,
+          hint: "It relates to the browser window.",
+          explanation:
+            "`vh` means viewport height. `10vh` takes 10 percent of the visible browser height.",
+          comparison: {
+            triggerOption: 2,
+            title: "vh vs vw",
+            rows: [
+              ["vh", "Based on viewport height"],
+              ["vw", "Based on viewport width"]
+            ]
+          }
+        },
+        {
+          id: "CH7-SEL-001",
+          topic: "selectors",
+          difficulty: "easy",
+          type: "standard",
+          question: "Which selector targets an element by its `id`?",
+          options: [".hero", "#hero", "*hero", "hero#"],
+          answer: 1,
+          hint: "HTML `id` pairs with a hash symbol in CSS.",
+          explanation:
+            "An `id` selector begins with `#`, such as `#red-para`. A class selector begins with `.`.",
+          comparison: {
+            triggerOption: 0,
+            title: "Class vs ID selector",
+            rows: [
+              [".hero", "Targets class='hero'"],
+              ["#hero", "Targets id='hero'"]
+            ]
+          }
+        },
+        {
+          id: "CH7-SEL-002",
+          topic: "selectors",
+          difficulty: "easy",
+          type: "standard",
+          question: "Which selector applies styles to every element on the page?",
+          options: ["all", "*", "body *only", "#all"],
+          answer: 1,
+          hint: "It is a single character.",
+          explanation:
+            "The universal selector `*` matches all elements. Your `style.css` uses it to center text and later set a blue text color.",
+          comparison: {
+            triggerOption: 2,
+            title: "* vs body *",
+            rows: [
+              ["*", "Matches every element"],
+              ["body *", "Matches every descendant inside body, not the body itself"]
+            ]
+          }
+        },
+        {
+          id: "CH7-SEL-003",
+          topic: "selectors",
+          difficulty: "easy",
+          type: "standard",
+          question: "Which selector would target all `<p>` elements?",
+          options: ["p", ".p", "#p", "[p]"],
+          answer: 0,
+          hint: "It uses the tag name directly.",
+          explanation:
+            "A type selector uses the element name, so `p` targets paragraph elements.",
+          comparison: {
+            triggerOption: 1,
+            title: "p vs .p",
+            rows: [
+              ["p", "Targets paragraph tags"],
+              [".p", "Targets any element with class='p'"]
+            ]
+          }
+        },
+        {
+          id: "CH7-PSE-001",
+          topic: "pseudo-classes",
+          difficulty: "easy",
+          type: "standard",
+          question: "Which pseudo-class targets a link while the pointer is over it?",
+          options: [":visited", ":hover", ":active", ":focus"],
+          answer: 1,
+          hint: "It reacts to pointing, not clicking.",
+          explanation:
+            "`:hover` applies while the mouse pointer is over an element. In your lesson, hovering over links changes color and adds underline.",
+          comparison: {
+            triggerOption: 2,
+            title: ":hover vs :active",
+            rows: [
+              [":hover", "Applies while the pointer is over the element"],
+              [":active", "Applies at the moment the element is being activated or clicked"]
+            ]
+          }
+        },
+        {
+          id: "CH7-PSE-002",
+          topic: "pseudo-elements",
+          difficulty: "easy",
+          type: "standard",
+          question: "Which pseudo-element inserts generated content before an element?",
+          options: ["::first-letter", "::before", ":before", "::marker"],
+          answer: 1,
+          hint: "It comes before the content flow.",
+          explanation:
+            "`::before` inserts generated content before the element's normal content. The lesson uses it to add the word `Before:`.",
+          comparison: {
+            triggerOption: 0,
+            title: "::before vs ::first-letter",
+            rows: [
+              ["::before", "Inserts generated content before the element"],
+              ["::first-letter", "Styles the first letter of existing content"]
+            ]
+          }
+        },
+        {
+          id: "CH7-ATT-001",
+          topic: "attribute-selectors",
+          difficulty: "easy",
+          type: "standard",
+          question: "What does `input[type]` mean?",
+          options: [
+            "All inputs except those with a type attribute",
+            "Any input that has a `type` attribute",
+            "Only text inputs",
+            "Only inputs whose type starts with `type`"
+          ],
+          answer: 1,
+          hint: "No value is specified, only presence.",
+          explanation:
+            "`[attribute]` checks whether the attribute exists. So `input[type]` matches text, password, and other input elements that have a `type` attribute.",
+          comparison: {
+            triggerOption: 2,
+            title: "[type] vs [type='text']",
+            rows: [
+              ["input[type]", "Any input that has a type attribute"],
+              ["input[type='text']", "Only text inputs"]
+            ]
+          }
+        },
+        {
+          id: "CH6-COL-004",
+          topic: "colors",
+          difficulty: "medium",
+          type: "standard",
+          question: "Which format from the lesson was used as `#883997`?",
+          options: ["HSL", "RGB", "Hex", "Named color"],
+          answer: 2,
+          hint: "It begins with a hash sign.",
+          explanation:
+            "Values like `#883997` are hexadecimal color codes. Each pair controls red, green, and blue intensity.",
+          comparison: {
+            triggerOption: 1,
+            title: "rgb vs hex",
+            rows: [
+              ["rgb(143, 135, 23)", "Three decimal channel values"],
+              ["#883997", "Three hexadecimal channel pairs"]
+            ]
+          }
+        },
+        {
+          id: "CH6-COL-005",
+          topic: "colors",
+          difficulty: "medium",
+          type: "standard",
+          question: "Which border declaration below matches the groove border example best?",
+          options: [
+            "border: 10px groove #883997;",
+            "border: groove 10 #883997;",
+            "border-style: groove 10px #883997;",
+            "border: 10 groove purple;"
+          ],
+          answer: 0,
+          hint: "The shorthand needs width, style, and color in valid forms.",
+          explanation:
+            "`border: 10px groove #883997;` is valid shorthand with width, style, and color. The lesson uses that exact structure.",
+          comparison: {
+            triggerOption: 2,
+            title: "border shorthand vs border-style",
+            rows: [
+              ["border", "Can include width, style, and color together"],
+              ["border-style", "Only specifies the style"]
+            ]
+          }
+        },
+        {
+          id: "CH6-TXT-005",
+          topic: "text-formatting",
+          difficulty: "medium",
+          type: "standard",
+          question: "If you want an underline to look wavy, which extra property from the lesson helps?",
+          options: [
+            "text-style: wavy",
+            "text-decoration-style: wavy",
+            "text-transform: wavy",
+            "font-decoration-style: wavy"
+          ],
+          answer: 1,
+          hint: "It refines the decoration, not the text case.",
+          explanation:
+            "`text-decoration-style: wavy` changes the underline style. The line itself still comes from `text-decoration-line: underline`.",
+          comparison: {
+            triggerOption: 0,
+            title: "Missing property pair",
+            rows: [
+              ["text-decoration-line", "Chooses underline, overline, line-through"],
+              ["text-decoration-style", "Chooses style like solid, wavy, dotted"]
+            ]
+          }
+        },
+        {
+          id: "CH6-SPA-001",
+          topic: "spacing",
+          difficulty: "medium",
+          type: "standard",
+          question: "What does `text-indent: 50%` mainly affect?",
+          options: [
+            "The first line starting position",
+            "Every line's right margin",
+            "The gap between letters",
+            "The entire block width"
+          ],
+          answer: 0,
+          hint: "Indentation commonly changes where a paragraph begins.",
+          explanation:
+            "`text-indent` controls how far the first line is pushed in from the start edge. It does not set block width.",
+          comparison: {
+            triggerOption: 3,
+            title: "text-indent vs width",
+            rows: [
+              ["text-indent", "Moves where the first line starts"],
+              ["width", "Defines overall element width"]
+            ]
+          }
+        },
+        {
+          id: "CH6-SPA-002",
+          topic: "spacing",
+          difficulty: "medium",
+          type: "standard",
+          question: "Which property is for vertical spacing between text lines?",
+          options: ["line-height", "letter-spacing", "word-spacing", "text-align"],
+          answer: 0,
+          hint: "It refers to each line box.",
+          explanation:
+            "`line-height` controls the vertical distance between lines of text. `letter-spacing` and `word-spacing` are horizontal adjustments.",
+          comparison: {
+            triggerOption: 2,
+            title: "word-spacing vs line-height",
+            rows: [
+              ["word-spacing", "Horizontal space between words"],
+              ["line-height", "Vertical spacing between lines"]
+            ]
+          }
+        },
+        {
+          id: "CH6-UNIT-003",
+          topic: "units",
+          difficulty: "medium",
+          type: "standard",
+          question: "In your lesson, why is `1.5rem` different from `50%` width?",
+          options: [
+            "`rem` is based on the root font size, `%` width is based on a containing box",
+            "`rem` is based on viewport width, `%` is based on height",
+            "They are identical and only written differently",
+            "`rem` only works on paragraphs"
+          ],
+          answer: 0,
+          hint: "Think root element vs parent layout.",
+          explanation:
+            "`rem` is relative to the root element's font size, while percentage width is usually relative to the parent or containing block.",
+          comparison: {
+            triggerOption: 1,
+            title: "rem vs vw",
+            rows: [
+              ["rem", "Relative to the root font size"],
+              ["vw", "Relative to viewport width"]
+            ]
+          }
+        },
+        {
+          id: "CH6-UNIT-004",
+          topic: "units",
+          difficulty: "medium",
+          type: "standard",
+          question: "If the root font size is 16px, what is `1.5rem`?",
+          options: ["16px", "20px", "24px", "32px"],
+          answer: 2,
+          hint: "Multiply 16 by 1.5.",
+          explanation:
+            "`1.5rem` equals 24px when the root font size is 16px. This is why rem units scale predictably.",
+          comparison: {
+            triggerOption: 1,
+            title: "20px vs 1.5rem",
+            rows: [
+              ["20px", "Fixed absolute pixel value"],
+              ["1.5rem", "Relative value that becomes 24px if root is 16px"]
+            ]
+          }
+        },
+        {
+          id: "CH7-SEL-004",
+          topic: "selectors",
+          difficulty: "medium",
+          type: "standard",
+          question: "What does `.blue-bg.red-text` target?",
+          options: [
+            "A `.blue-bg` element inside `.red-text`",
+            "Any element with both classes",
+            "An element with id `blue-bg red-text`",
+            "Only `div` tags with `.blue-bg`"
+          ],
+          answer: 1,
+          hint: "No space means the same element must satisfy both.",
+          explanation:
+            "When class selectors are combined without spaces, the same element must have both classes. The chapter 7 file uses this on an `h1`.",
+          comparison: {
+            triggerOption: 0,
+            title: ".a.b vs .a .b",
+            rows: [
+              [".a.b", "Same element has both classes"],
+              [".a .b", "A `.b` descendant inside a `.a` element"]
+            ]
+          }
+        },
+        {
+          id: "CH7-SEL-005",
+          topic: "selectors",
+          difficulty: "medium",
+          type: "standard",
+          question: "In the provided `style.css`, why can `#red-para` override the universal selector's color?",
+          options: [
+            "Because IDs are more specific than the universal selector",
+            "Because universal selectors always lose to classes but not IDs",
+            "Because `#red-para` is written in HTML, not CSS",
+            "Because `*` cannot style color"
+          ],
+          answer: 0,
+          hint: "This is a selector specificity question.",
+          explanation:
+            "ID selectors have much higher specificity than the universal selector, so `#red-para` can set its own color even if `*` applies a general color.",
+          comparison: {
+            triggerOption: 1,
+            title: "Specificity nuance",
+            rows: [
+              ["Universal selector `*`", "Very low specificity"],
+              ["ID selector `#red-para`", "High specificity"]
+            ]
+          }
+        },
+        {
+          id: "CH7-PSE-003",
+          topic: "pseudo-classes",
+          difficulty: "medium",
+          type: "standard",
+          question: "Which selector matches the first `<li>` inside `ul.first-child-list`?",
+          options: [
+            "ul.first-child-list li:first-child",
+            "ul.first-child-list:first-child li",
+            "li ul.first-child-list:first-child",
+            "ul:first-child-list li"
+          ],
+          answer: 0,
+          hint: "The pseudo-class belongs to the `li` being tested.",
+          explanation:
+            "The correct selector checks whether each `li` is the first child. That is exactly how the lesson styles the red bold item.",
+          comparison: {
+            triggerOption: 1,
+            title: "Target parent vs target child",
+            rows: [
+              ["ul.first-child-list li:first-child", "Styles the first li inside that ul"],
+              ["ul.first-child-list:first-child li", "Styles li only if the whole ul is the first child of its parent"]
+            ]
+          }
+        },
+        {
+          id: "CH7-PSE-004",
+          topic: "pseudo-classes",
+          difficulty: "medium",
+          type: "standard",
+          question: "What does `li:nth-child(3)` select?",
+          options: [
+            "The third `li` of its parent",
+            "Every third `li` across the page",
+            "The third list on the page",
+            "Any `li` with class `third`"
+          ],
+          answer: 0,
+          hint: "It counts sibling position.",
+          explanation:
+            "`:nth-child(3)` matches an element when it is the third child of its parent. In your lesson, that makes the third list item yellow.",
+          comparison: {
+            triggerOption: 1,
+            title: "nth-child meaning",
+            rows: [
+              ["li:nth-child(3)", "An li that is the third child of its parent"],
+              ["Every third li globally", "Not what CSS means here"]
+            ]
+          }
+        },
+        {
+          id: "CH7-PSE-005",
+          topic: "pseudo-classes",
+          difficulty: "medium",
+          type: "standard",
+          question: "When does `:only-child` match an element?",
+          options: [
+            "When it is the only child element of its parent",
+            "When it is alone on the line",
+            "When the parent has only text and that element",
+            "When the element has one class"
+          ],
+          answer: 0,
+          hint: "It is about sibling count, not line layout.",
+          explanation:
+            "`:only-child` matches when the element is the parent's single child element. The lesson shows one `li` inside a dedicated list for that case.",
+          comparison: {
+            triggerOption: 2,
+            title: "Only child vs only text",
+            rows: [
+              ["Only child", "About element siblings"],
+              ["Text around it", "Does not change the CSS selector meaning"]
+            ]
+          }
+        },
+        {
+          id: "CH7-PSEL-001",
+          topic: "pseudo-elements",
+          difficulty: "medium",
+          type: "standard",
+          question: "Which pseudo-element styles only the first visible line of a block of text?",
+          options: ["::first-letter", "::first-line", "::before", "::marker"],
+          answer: 1,
+          hint: "It affects more than one character, but not the whole paragraph.",
+          explanation:
+            "`::first-line` styles only the first rendered line of a block. It depends on layout and available width.",
+          comparison: {
+            triggerOption: 0,
+            title: "::first-letter vs ::first-line",
+            rows: [
+              ["::first-letter", "Styles a single initial letter"],
+              ["::first-line", "Styles the whole first rendered line"]
+            ]
+          }
+        },
+        {
+          id: "CH7-PSEL-002",
+          topic: "pseudo-elements",
+          difficulty: "medium",
+          type: "standard",
+          question: "What does `ul.marker-example li::marker` target?",
+          options: [
+            "The bullet or list marker of each li",
+            "The whole li text content",
+            "A generated element after each li",
+            "Only ordered list numbers"
+          ],
+          answer: 0,
+          hint: "It is the symbol before the text.",
+          explanation:
+            "`::marker` styles the list marker itself, such as bullets or numbering symbols. The lesson colors the markers purple and makes them larger.",
+          comparison: {
+            triggerOption: 1,
+            title: "::marker vs li styling",
+            rows: [
+              ["li::marker", "Styles only the marker"],
+              ["li", "Styles the entire list item"]
+            ]
+          }
+        },
+        {
+          id: "CH7-ATT-002",
+          topic: "attribute-selectors",
+          difficulty: "medium",
+          type: "standard",
+          question: "Which selector matches `<p class='highlight special'>` because `highlight` is one space-separated word in the class list?",
+          options: [
+            "p[class='highlight']",
+            "p[class~='highlight']",
+            "p[class|='highlight']",
+            "p[class^='highlight']"
+          ],
+          answer: 1,
+          hint: "The operator checks a word in a space-separated list.",
+          explanation:
+            "`[attribute~=value]` matches when the value appears as one whole word in a space-separated list. That makes it great for classes.",
+          comparison: {
+            triggerOption: 2,
+            title: "~= vs |=",
+            rows: [
+              ["~=", "Matches a whole word in a space-separated list"],
+              ["|=", "Matches exact value or value followed by a hyphen"]
+            ]
+          }
+        },
+        {
+          id: "CH7-ATT-003",
+          topic: "attribute-selectors",
+          difficulty: "medium",
+          type: "standard",
+          question: "What does `[lang|='en']` match in your lesson?",
+          options: [
+            "Only `lang='en'`",
+            "`lang='en'` and values like `en-US`",
+            "Any language containing the letters `en` anywhere",
+            "Any English text node"
+          ],
+          answer: 1,
+          hint: "This operator supports an optional hyphen suffix.",
+          explanation:
+            "`[lang|='en']` matches `en` and hyphenated variations such as `en-US`. It is commonly used with language codes.",
+          comparison: {
+            triggerOption: 2,
+            title: "|= vs *=",
+            rows: [
+              ["|='en'", "Exact `en` or `en-...`"],
+              ["*='en'", "Contains `en` anywhere in the value"]
+            ]
+          }
+        },
+        {
+          id: "CH7-ATT-004",
+          topic: "attribute-selectors",
+          difficulty: "medium",
+          type: "standard",
+          question: "Which selector matches links that begin with `https`?",
+          options: ["a[href$='https']", "a[href^='https']", "a[href*='https-']", "a[href|='https']"],
+          answer: 1,
+          hint: "The operator means starts with.",
+          explanation:
+            "`^=` means starts with. In the lesson, `a[href^='https']` colors secure links differently.",
+          comparison: {
+            triggerOption: 0,
+            title: "^= vs $=",
+            rows: [
+              ["^=", "Value starts with the pattern"],
+              ["$=", "Value ends with the pattern"]
+            ]
+          }
+        },
+        {
+          id: "CH7-ATT-005",
+          topic: "attribute-selectors",
+          difficulty: "medium",
+          type: "standard",
+          question: "Which selector should be used to add `PDF:` before links ending in `.pdf`?",
+          options: [
+            "a[href*='.pdf']::after",
+            "a[href$='.pdf']::before",
+            "a[href^='.pdf']::before",
+            "a[href|='.pdf']::marker"
+          ],
+          answer: 1,
+          hint: "The example combines an ending-match selector with generated content before the text.",
+          explanation:
+            "The lesson uses `a[href$='.pdf']::before` to prepend `PDF:` to links that end in `.pdf`.",
+          comparison: {
+            triggerOption: 0,
+            title: "Contains vs ends-with",
+            rows: [
+              ["*='.pdf'", "Contains `.pdf` anywhere"],
+              ["$='.pdf'", "Ends exactly with `.pdf`"]
+            ]
+          }
+        },
+        {
+          id: "HYB-HTMLCSS-001",
+          topic: "hybrid",
+          difficulty: "medium",
+          type: "hybrid",
+          question: "A `span` from earlier HTML lessons is inline. Which CSS choice best keeps it inline while coloring its text red?",
+          options: [
+            "span { color: red; }",
+            "span { width: 100%; color: red; }",
+            "span { display: block; color: red; }",
+            "span { text-align: justify; }"
+          ],
+          answer: 0,
+          hint: "You only need to change color, not display behavior.",
+          explanation:
+            "The HTML chapters teach that `span` is an inline container. `color: red;` changes the text color without changing that inline behavior. Setting `display: block` would change the layout.",
+          comparison: {
+            triggerOption: 2,
+            title: "Inline element vs block styling",
+            rows: [
+              ["color: red", "Changes only the text color"],
+              ["display: block", "Changes the layout role from inline to block"]
+            ]
+          }
+        },
+        {
+          id: "HYB-HTMLCSS-002",
+          topic: "hybrid",
+          difficulty: "medium",
+          type: "hybrid",
+          question: "Which selector would style only anchor tags whose `href` opens a PDF from earlier HTML linking concepts?",
+          options: [
+            "a[href$='.pdf']",
+            "a[href^='.pdf']",
+            "a[href|='.pdf']",
+            "a::pdf"
+          ],
+          answer: 0,
+          hint: "The file extension is at the end of the URL.",
+          explanation:
+            "The anchor concept comes from earlier HTML lessons, while the CSS filter comes from chapter 7. The ending-match selector `$=` is the right fit for file extensions.",
+          comparison: {
+            triggerOption: 1,
+            title: "Starts-with vs ends-with for files",
+            rows: [
+              ["^='.pdf'", "Would only match values beginning with `.pdf`"],
+              ["$='.pdf'", "Matches values ending with `.pdf`"]
+            ]
+          }
+        },
+        {
+          id: "HYB-SUP-001",
+          topic: "superfile",
+          difficulty: "medium",
+          type: "hybrid",
+          question: "The superfile introduces `figure` and `figcaption`. Which selector styles only the caption text of a figure?",
+          options: ["figure", "img", "figcaption", ".figure caption"],
+          answer: 2,
+          hint: "The element has its own semantic tag.",
+          explanation:
+            "`figcaption` is the semantic caption element for a figure. This topic appears in the superfile even though it was not in the earlier chapter 3 and 4 lesson files.",
+          comparison: {
+            triggerOption: 0,
+            title: "figure vs figcaption",
+            rows: [
+              ["figure", "Wraps the media and caption as one semantic unit"],
+              ["figcaption", "Represents the caption itself"]
+            ]
+          }
+        },
+        {
+          id: "HYB-SUP-002",
+          topic: "superfile",
+          difficulty: "medium",
+          type: "hybrid",
+          question: "The superfile includes forms, which were not fully covered in the earlier chapter files. Which selector targets only text inputs inside a form?",
+          options: [
+            "form input[type='text']",
+            "form[type='text'] input",
+            "input:form[text]",
+            "form::text"
+          ],
+          answer: 0,
+          hint: "Combine a descendant selector with an attribute selector.",
+          explanation:
+            "This combines a superfile topic, forms, with chapter 7 attribute selectors. `form input[type='text']` means text inputs that are descendants of a form.",
+          comparison: {
+            triggerOption: 1,
+            title: "Where the attribute belongs",
+            rows: [
+              ["form input[type='text']", "The input has the type attribute"],
+              ["form[type='text'] input", "Would look for a form whose own type attribute is text"]
+            ]
+          }
+        },
+        {
+          id: "CH6-COL-006",
+          topic: "colors",
+          difficulty: "hard",
+          type: "standard",
+          question: "Which statement is most accurate about `hsla(145, 58%, 46%, 1)` from the lesson?",
+          options: [
+            "It is hue, saturation, lightness, alpha and alpha `1` means fully opaque",
+            "It is hue, shade, level, alpha and alpha `1` means invisible",
+            "It is red, green, blue, alpha with percentages",
+            "It is a hex color with transparency"
+          ],
+          answer: 0,
+          hint: "The `a` still means alpha.",
+          explanation:
+            "`hsla()` means hue, saturation, lightness, alpha. An alpha of `1` is fully opaque, while lower values become more transparent.",
+          comparison: {
+            triggerOption: 2,
+            title: "hsla vs rgba",
+            rows: [
+              ["hsla()", "Hue-based model with alpha"],
+              ["rgba()", "Red-green-blue model with alpha"]
+            ]
+          }
+        },
+        {
+          id: "CH6-SPA-003",
+          topic: "spacing",
+          difficulty: "hard",
+          type: "standard",
+          question: "Why is a negative `line-height` in the lesson example a bad idea in real CSS work?",
+          options: [
+            "Because line-height expects non-negative values and negative values are invalid",
+            "Because line-height only accepts percentages",
+            "Because line-height can only be used on headings",
+            "Because line-height automatically becomes zero"
+          ],
+          answer: 0,
+          hint: "This is a validity and readability issue.",
+          explanation:
+            "Negative `line-height` values are invalid in CSS and would not be a sensible way to manage readable text. That makes it a useful trick question and an example of why code should be checked, not copied blindly.",
+          comparison: {
+            triggerOption: 3,
+            title: "Invalid vs default behavior",
+            rows: [
+              ["Invalid value", "Browser ignores or resolves according to CSS rules"],
+              ["Zero by default", "Not what CSS does here"]
+            ]
+          }
+        },
+        {
+          id: "CH6-UNIT-005",
+          topic: "units",
+          difficulty: "hard",
+          type: "standard",
+          question: "If a parent has `font-size: 20px`, why does a child with `font-size: 1.5rem` not become 30px when the root remains 16px?",
+          options: [
+            "Because `rem` uses the root font size, not the parent size",
+            "Because `rem` always rounds down to 20px",
+            "Because `rem` only works in the body element",
+            "Because parent font sizes cancel child styles"
+          ],
+          answer: 0,
+          hint: "This question tests the `r` in `rem`.",
+          explanation:
+            "`rem` means root em. It ignores the parent's font size and uses the root font size instead. With a 16px root, `1.5rem` is still 24px.",
+          comparison: {
+            triggerOption: 1,
+            title: "rem vs em idea",
+            rows: [
+              ["rem", "Relative to root font size"],
+              ["Parent-relative unit", "Would depend on ancestor font size"]
+            ]
+          }
+        },
+        {
+          id: "CH7-SEL-006",
+          topic: "selectors",
+          difficulty: "hard",
+          type: "standard",
+          question: "Given the `style.css` shown, what color will a normal paragraph most likely end up with?",
+          options: ["Red", "Blue", "Black", "Undefined because CSS crashes"],
+          answer: 1,
+          hint: "There are duplicate `p` and `*` rules. Read the later one too.",
+          explanation:
+            "The later universal selector sets `color: blue`, and no later paragraph-specific color overrides it for normal paragraphs. Duplicate rules do not crash CSS; the cascade decides the result.",
+          comparison: {
+            triggerOption: 3,
+            title: "Cascade vs crash",
+            rows: [
+              ["CSS cascade", "Later applicable rules can override earlier ones"],
+              ["CSS crash", "Not how normal duplicate rules behave"]
+            ]
+          }
+        },
+        {
+          id: "CH7-PSE-006",
+          topic: "pseudo-classes",
+          difficulty: "hard",
+          type: "standard",
+          question: "Why might `li:nth-child(3)` fail to style the visual third list item someone expected?",
+          options: [
+            "Because it counts the element's position among all children, not just matching tag names in every scenario",
+            "Because nth-child starts at zero",
+            "Because nth-child only works on ordered lists",
+            "Because nth-child ignores HTML structure"
+          ],
+          answer: 0,
+          hint: "The pseudo-class counts child order, not human intention.",
+          explanation:
+            "`:nth-child()` is based on sibling position in the DOM. If extra nodes or different child elements exist, the visually expected item might not be the actual third child.",
+          comparison: {
+            triggerOption: 3,
+            title: "DOM position vs visual guess",
+            rows: [
+              ["nth-child()", "Matches actual child index in the DOM"],
+              ["Visual third item guess", "Can be wrong if structure differs"]
+            ]
+          }
+        },
+        {
+          id: "CH7-PSEL-003",
+          topic: "pseudo-elements",
+          difficulty: "hard",
+          type: "standard",
+          question: "Why does `::first-line` behave differently when the screen width changes?",
+          options: [
+            "Because the first rendered line changes with layout and wrapping",
+            "Because pseudo-elements stop working on small screens",
+            "Because `::first-line` actually targets the first sentence",
+            "Because mobile browsers replace it with `::first-letter`"
+          ],
+          answer: 0,
+          hint: "A line is a rendering result, not fixed source code.",
+          explanation:
+            "The first line depends on layout width, font size, and wrapping. When the viewport changes, the set of words that fit on the first line can change too.",
+          comparison: {
+            triggerOption: 2,
+            title: "Sentence vs rendered line",
+            rows: [
+              ["Rendered line", "Determined by layout"],
+              ["Sentence", "Determined by punctuation and text content"]
+            ]
+          }
+        },
+        {
+          id: "CH7-ATT-006",
+          topic: "attribute-selectors",
+          difficulty: "hard",
+          type: "standard",
+          question: "Which selector is the best choice for matching URLs that contain the word `example` anywhere in the href?",
+          options: [
+            "a[href|='example']",
+            "a[href*='example']",
+            "a[href^='example']",
+            "a[href~='example']"
+          ],
+          answer: 1,
+          hint: "This is the wildcard contains operator.",
+          explanation:
+            "`*=` matches when the attribute value contains the pattern anywhere. That is the right mental model for substring matching.",
+          comparison: {
+            triggerOption: 0,
+            title: "*= vs |=",
+            rows: [
+              ["*=", "Contains the substring anywhere"],
+              ["|=", "Exact value or value followed by a hyphen"]
+            ]
+          }
+        },
+        {
+          id: "HYB-HTMLCSS-003",
+          topic: "hybrid",
+          difficulty: "hard",
+          type: "hybrid",
+          question: "Earlier HTML chapters introduced `blockquote` and `q`. If you want a decorative quote mark inserted before every blockquote without changing the HTML, which CSS approach fits best?",
+          options: [
+            "blockquote::before { content: '\"'; }",
+            "blockquote:first-letter { text: '\"'; }",
+            "q::marker { content: '\"'; }",
+            "blockquote:hover { quote: '\"'; }"
+          ],
+          answer: 0,
+          hint: "Use generated content.",
+          explanation:
+            "This combines earlier HTML quotation tags with chapter 7 pseudo-elements. `::before` is built for generated content inserted before existing content.",
+          comparison: {
+            triggerOption: 1,
+            title: "::before vs first-letter",
+            rows: [
+              ["::before", "Generates new content before the element content"],
+              ["::first-letter", "Styles the first existing letter only"]
+            ]
+          }
+        },
+        {
+          id: "HYB-SUP-003",
+          topic: "superfile",
+          difficulty: "hard",
+          type: "hybrid",
+          question: "The superfile adds tables, a topic not present in the old lesson files. Which selector styles only the first row of a table body if it is also the first child row?",
+          options: [
+            "tbody tr:first-child",
+            "table:first-child tr",
+            "tr::first-line",
+            "tbody:first-line tr"
+          ],
+          answer: 0,
+          hint: "The pseudo-class should test the row itself.",
+          explanation:
+            "This is a superfile-only topic combined with chapter 7 pseudo-classes. `tbody tr:first-child` targets a row when it is the first child inside the table body.",
+          comparison: {
+            triggerOption: 1,
+            title: "Parent first-child vs row first-child",
+            rows: [
+              ["tbody tr:first-child", "The first row inside tbody"],
+              ["table:first-child tr", "Rows only if the table itself is the first child of its parent"]
+            ]
+          }
+        },
+        {
+          id: "HYB-SUP-004",
+          topic: "superfile",
+          difficulty: "hard",
+          type: "hybrid",
+          question: "The superfile also includes multimedia. If you wanted to style only `<video>` elements that have a `controls` attribute, which selector is correct?",
+          options: ["video.controls", "video[controls]", "video::controls", "video#controls"],
+          answer: 1,
+          hint: "This is presence matching, not a class name.",
+          explanation:
+            "`video[controls]` uses an attribute presence selector. It matches video elements where the `controls` attribute exists.",
+          comparison: {
+            triggerOption: 0,
+            title: "Class selector vs attribute selector",
+            rows: [
+              [".controls", "Matches class='controls'"],
+              ["[controls]", "Matches elements with a controls attribute"]
+            ]
+          }
+        },
+        {
+          id: "HYB-HTMLCSS-004",
+          topic: "hybrid",
+          difficulty: "hard",
+          type: "hybrid",
+          question: "Earlier HTML chapters stressed using `alt` on images. Which selector would style only images that actually have an `alt` attribute?",
+          options: ["img.alt", "img[alt]", "img::alt", "img#alt"],
+          answer: 1,
+          hint: "This is about attribute presence.",
+          explanation:
+            "The HTML concept is image accessibility with `alt`; the CSS concept is attribute presence matching. `img[alt]` matches only images that include the attribute.",
+          comparison: {
+            triggerOption: 0,
+            title: "Class name vs real attribute",
+            rows: [
+              [".alt", "A CSS class named alt"],
+              ["[alt]", "The actual HTML alt attribute exists"]
+            ]
+          }
+        },
+        {
+          id: "CH6-TXT-006",
+          topic: "text-formatting",
+          difficulty: "hard",
+          type: "standard",
+          question: "Which pair correctly describes two different chapter 6 concepts?",
+          options: [
+            "`text-transform` changes case, `text-decoration-line` adds visual lines",
+            "`text-transform` adds underline, `text-decoration-line` changes case",
+            "`text-align` changes case, `text-indent` adds line-through",
+            "`line-height` styles only the first line, `letter-spacing` changes case"
+          ],
+          answer: 0,
+          hint: "One changes letters, the other adds line decoration.",
+          explanation:
+            "`text-transform` affects capitalization such as uppercase or lowercase. `text-decoration-line` controls underline, overline, or line-through visuals.",
+          comparison: {
+            triggerOption: 1,
+            title: "Swapped meanings",
+            rows: [
+              ["Correct mapping", "Case change vs decoration lines"],
+              ["Swapped mapping", "Common but incorrect confusion"]
+            ]
+          }
+        },
+        {
+          id: "CH7-SEL-007",
+          topic: "selectors",
+          difficulty: "hard",
+          type: "standard",
+          question: "Which statement about duplicate rules in `style.css` is correct?",
+          options: [
+            "Later applicable rules can override earlier ones through the cascade",
+            "The first rule always wins no matter what",
+            "Duplicate rules invalidate the whole file",
+            "Only class selectors are allowed to repeat"
+          ],
+          answer: 0,
+          hint: "CSS is designed to handle multiple matching rules.",
+          explanation:
+            "CSS uses the cascade, specificity, and source order. Duplicate selectors are not fatal; the later applicable declaration often wins if specificity is equal.",
+          comparison: {
+            triggerOption: 1,
+            title: "First rule myth vs cascade",
+            rows: [
+              ["First rule always wins", "False in CSS"],
+              ["Cascade and source order", "The real mechanism"]
+            ]
+          }
+        }
+      ];
+
+      const STORAGE_KEY = "chapter-6-7-quiz-save";
+      const HARD_UNLOCK_STREAK = 3;
+      const HESITATION_SECONDS = 12;
+      const difficultyWeight = { easy: 1, medium: 2, hard: 3 };
+      const topicStats = {};
+      const state = {
+        selectedCount: 20,
+        mode: "standard",
+        requestedStartDifficulty: "easy",
+        queue: [],
+        usedIds: new Set(),
+        currentIndex: 0,
+        answers: [],
+        score: 0,
+        blitzScore: 0,
+        streak: 0,
+        hardUnlocked: false,
+        currentQuestionStartedAt: 0,
+        currentQuestionId: null,
+        answeredCurrent: false,
+        timerHandle: null
+      };
+
+      const els = {
+        questionCount: document.getElementById("questionCount"),
+        modeSelect: document.getElementById("modeSelect"),
+        difficultySelect: document.getElementById("difficultySelect"),
+        resumeFile: document.getElementById("resumeFile"),
+        startBtn: document.getElementById("startBtn"),
+        resumeLocalBtn: document.getElementById("resumeLocalBtn"),
+        exportBtn: document.getElementById("exportBtn"),
+        resetBtn: document.getElementById("resetBtn"),
+        quizPanel: document.getElementById("quizPanel"),
+        resultsPanel: document.getElementById("resultsPanel"),
+        questionTitle: document.getElementById("questionTitle"),
+        questionMeta: document.getElementById("questionMeta"),
+        modeBadge: document.getElementById("modeBadge"),
+        streakBadge: document.getElementById("streakBadge"),
+        lockBadge: document.getElementById("lockBadge"),
+        asciiBar: document.getElementById("asciiBar"),
+        meterFill: document.getElementById("meterFill"),
+        topicBadge: document.getElementById("topicBadge"),
+        difficultyBadge: document.getElementById("difficultyBadge"),
+        timerBadge: document.getElementById("timerBadge"),
+        hesitationBadge: document.getElementById("hesitationBadge"),
+        questionText: document.getElementById("questionText"),
+        questionCode: document.getElementById("questionCode"),
+        optionsWrap: document.getElementById("optionsWrap"),
+        hintBtn: document.getElementById("hintBtn"),
+        saveBtn: document.getElementById("saveBtn"),
+        nextBtn: document.getElementById("nextBtn"),
+        hintBox: document.getElementById("hintBox"),
+        feedbackBox: document.getElementById("feedbackBox"),
+        comparisonBox: document.getElementById("comparisonBox"),
+        resultsSummary: document.getElementById("resultsSummary"),
+        resultHero: document.getElementById("resultHero"),
+        topicMastery: document.getElementById("topicMastery"),
+        reviewList: document.getElementById("reviewList")
+      };
+
+      function initTopicStats() {
+        Object.keys(topicStats).forEach((key) => delete topicStats[key]);
+        for (const question of quizBank) {
+          if (!topicStats[question.topic]) {
+            topicStats[question.topic] = { asked: 0, correct: 0, totalTime: 0, hesitant: 0 };
+          }
+        }
+      }
+
+      function shuffle(items) {
+        const arr = [...items];
+        for (let i = arr.length - 1; i > 0; i -= 1) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+      }
+
+      function getProgressPercent() {
+        if (!state.selectedCount) return 0;
+        return Math.round((state.answers.length / state.selectedCount) * 100);
+      }
+
+      function buildAsciiBar(percent) {
+        const totalSlots = 20;
+        const filled = Math.round((percent / 100) * totalSlots);
+        return `[${"#".repeat(filled)}${"-".repeat(totalSlots - filled)}] ${percent}%`;
+      }
+
+      function setDifficultyBadge(level) {
+        els.difficultyBadge.textContent = level.charAt(0).toUpperCase() + level.slice(1);
+        els.difficultyBadge.className = `badge ${level}`;
+      }
+
+      function getQuestionById(id) {
+        return quizBank.find((q) => q.id === id);
+      }
+
+      function getTopicMasteryScore(topic) {
+        const entry = topicStats[topic];
+        if (!entry || entry.asked === 0) return 0.5;
+        return entry.correct / entry.asked;
+      }
+
+      function getAllowedDifficulties() {
+        if (state.requestedStartDifficulty === "hard" && state.hardUnlocked) {
+          return ["hard"];
+        }
+        if (!state.hardUnlocked) {
+          if (state.answers.length < 4) return ["easy"];
+          if (state.requestedStartDifficulty === "medium") return ["easy", "medium"];
+          return ["easy", "medium"];
+        }
+        return ["easy", "medium", "hard"];
+      }
+
+      function chooseNextQuestion() {
+        const used = state.usedIds;
+        const remaining = quizBank.filter((q) => !used.has(q.id));
+        if (!remaining.length) return null;
+
+        const allowedDifficulties = getAllowedDifficulties();
+        let candidates = remaining.filter((q) => allowedDifficulties.includes(q.difficulty));
+        if (!candidates.length) candidates = remaining;
+
+        const scored = candidates.map((q) => {
+          const mastery = getTopicMasteryScore(q.topic);
+          const struggleBoost = 1 - mastery;
+          const base =
+            q.difficulty === "easy" ? 1 :
+            q.difficulty === "medium" ? 1.2 :
+            1.45;
+          const priority = base + struggleBoost * 2 + Math.random() * 0.35;
+          return { q, priority };
+        });
+
+        scored.sort((a, b) => b.priority - a.priority);
+        return scored[0].q;
+      }
+
+      function generateQueue(count) {
+        const queue = [];
+        state.usedIds = new Set();
+        while (queue.length < count) {
+          const next = chooseNextQuestion();
+          if (!next) break;
+          queue.push(next.id);
+          state.usedIds.add(next.id);
+        }
+        return queue;
+      }
+
+      function renderQuestion() {
+        const currentId = state.queue[state.currentIndex];
+        const question = getQuestionById(currentId);
+        if (!question) {
+          finishQuiz();
+          return;
+        }
+
+        state.currentQuestionId = question.id;
+        state.answeredCurrent = false;
+        state.currentQuestionStartedAt = Date.now();
+        clearInterval(state.timerHandle);
+        state.timerHandle = setInterval(updateTimerBadge, 100);
+
+        const displayIndex = state.currentIndex + 1;
+        els.questionTitle.textContent = `Question ${displayIndex} of ${state.selectedCount}`;
+        els.questionMeta.textContent = `${question.id} | ${question.type} | topic: ${question.topic}`;
+        els.modeBadge.textContent = `Mode: ${state.mode === "blitz" ? "Blitz" : "Standard"}`;
+        els.streakBadge.textContent = `Streak: ${state.streak}`;
+        els.lockBadge.textContent = state.hardUnlocked ? "Hard unlocked" : `Hard locked until streak ${HARD_UNLOCK_STREAK}`;
+        els.topicBadge.textContent = `Topic: ${question.topic}`;
+        setDifficultyBadge(question.difficulty);
+
+        const percent = getProgressPercent();
+        els.asciiBar.textContent = buildAsciiBar(percent);
+        els.meterFill.style.width = `${percent}%`;
+        els.questionText.textContent = question.question;
+
+        if (question.code) {
+          els.questionCode.hidden = false;
+          els.questionCode.textContent = question.code;
+        } else {
+          els.questionCode.hidden = true;
+          els.questionCode.textContent = "";
+        }
+
+        els.optionsWrap.innerHTML = "";
+        question.options.forEach((optionText, index) => {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "option";
+          button.textContent = `${String.fromCharCode(65 + index)}. ${optionText}`;
+          button.addEventListener("click", () => answerQuestion(index));
+          els.optionsWrap.appendChild(button);
+        });
+
+        els.hintBox.className = "feedback";
+        els.hintBox.textContent = "";
+        els.feedbackBox.className = "feedback";
+        els.feedbackBox.innerHTML = "";
+        els.comparisonBox.className = "comparison-box";
+        els.comparisonBox.innerHTML = "";
+        els.nextBtn.disabled = true;
+        els.exportBtn.disabled = false;
+        updateTimerBadge();
+      }
+
+      function updateTimerBadge() {
+        if (!state.currentQuestionStartedAt) return;
+        const elapsed = (Date.now() - state.currentQuestionStartedAt) / 1000;
+        els.timerBadge.textContent = `Time: ${elapsed.toFixed(1)}s`;
+        const mood = elapsed > HESITATION_SECONDS ? "hesitant" : elapsed > 6 ? "thinking" : "calm";
+        els.hesitationBadge.textContent = `Hesitation: ${mood}`;
+      }
+
+      function showHint() {
+        const question = getQuestionById(state.currentQuestionId);
+        if (!question) return;
+        els.hintBox.className = "feedback";
+        els.hintBox.classList.add("good");
+        els.hintBox.innerHTML = `<strong>Hint</strong><div>${question.hint}</div>`;
+      }
+
+      function renderComparison(question) {
+        if (!question.comparison) return;
+        const rows = question.comparison.rows
+          .map((row) => `<tr><td>${row[0]}</td><td>${row[1]}</td></tr>`)
+          .join("");
+        els.comparisonBox.className = "comparison-box active";
+        els.comparisonBox.innerHTML = `
+          <h3>${question.comparison.title}</h3>
+          <table>
+            <thead><tr><th>Option</th><th>Difference</th></tr></thead>
+            <tbody>${rows}</tbody>
+          </table>
+        `;
+      }
+
+      function answerQuestion(selectedIndex) {
+        if (state.answeredCurrent) return;
+
+        const question = getQuestionById(state.currentQuestionId);
+        if (!question) return;
+
+        state.answeredCurrent = true;
+        clearInterval(state.timerHandle);
+
+        const timeTaken = Number(((Date.now() - state.currentQuestionStartedAt) / 1000).toFixed(2));
+        const correct = selectedIndex === question.answer;
+        const hesitant = timeTaken > HESITATION_SECONDS;
+        const topicEntry = topicStats[question.topic];
+        topicEntry.asked += 1;
+        topicEntry.totalTime += timeTaken;
+        if (hesitant) topicEntry.hesitant += 1;
+        if (correct) topicEntry.correct += 1;
+
+        if (correct) {
+          state.score += 1;
+          state.streak += 1;
+          if (state.mode === "blitz") {
+            state.blitzScore += (difficultyWeight[question.difficulty] * 100) / Math.max(timeTaken, 1);
+          }
+        } else {
+          state.streak = 0;
+        }
+
+        if (!state.hardUnlocked && state.streak >= HARD_UNLOCK_STREAK) {
+          state.hardUnlocked = true;
+        }
+
+        const options = [...els.optionsWrap.querySelectorAll(".option")];
+        options.forEach((optionEl, index) => {
+          optionEl.disabled = true;
+          if (index === question.answer) optionEl.classList.add("correct");
+          else if (index === selectedIndex) optionEl.classList.add("wrong");
+          else optionEl.classList.add("dimmed");
+        });
+
+        const verdict = correct ? "Correct" : "Incorrect";
+        els.feedbackBox.className = `feedback ${correct ? "good" : "bad"}`;
+        els.feedbackBox.innerHTML = `
+          <strong>${verdict}</strong>
+          <div><strong>Explanation:</strong> ${question.explanation}</div>
+          <div><strong>Time to solve:</strong> ${timeTaken.toFixed(2)}s ${hesitant ? "<span class='warning'>(hesitant)</span>" : ""}</div>
+          ${state.mode === "blitz" ? `<div><strong>Blitz points:</strong> ${correct ? (((difficultyWeight[question.difficulty] * 100) / Math.max(timeTaken, 1)).toFixed(2)) : "0.00"}</div>` : ""}
+        `;
+
+        if (!correct && question.comparison && question.comparison.triggerOption === selectedIndex) {
+          renderComparison(question);
+        }
+
+        state.answers.push({
+          id: question.id,
+          topic: question.topic,
+          difficulty: question.difficulty,
+          selectedIndex,
+          correct,
+          timeTaken,
+          hesitant
+        });
+
+        els.streakBadge.textContent = `Streak: ${state.streak}`;
+        els.lockBadge.textContent = state.hardUnlocked ? "Hard unlocked" : `Hard locked until streak ${HARD_UNLOCK_STREAK}`;
+        els.nextBtn.disabled = false;
+        persistState();
+      }
+
+      function nextQuestion() {
+        if (!state.answeredCurrent) return;
+        state.currentIndex += 1;
+        if (state.currentIndex >= state.selectedCount) {
+          finishQuiz();
+          return;
+        }
+
+        if (state.currentIndex >= state.queue.length) {
+          const next = chooseNextQuestion();
+          if (next && !state.usedIds.has(next.id)) {
+            state.queue.push(next.id);
+            state.usedIds.add(next.id);
+          }
+        }
+        renderQuestion();
+      }
+
+      function topicMasteryMarkup() {
+        const topics = Object.entries(topicStats)
+          .filter(([, data]) => data.asked > 0)
+          .sort((a, b) => {
+            const aPct = a[1].correct / a[1].asked;
+            const bPct = b[1].correct / b[1].asked;
+            return aPct - bPct;
+          });
+
+        if (!topics.length) return "<p class='muted'>No topic data yet.</p>";
+
+        return topics
+          .map(([topic, data]) => {
+            const pct = Math.round((data.correct / data.asked) * 100);
+            return `
+              <div class="topic-row">
+                <div><strong>${topic}</strong></div>
+                <div class="topic-bar"><span style="width:${pct}%"></span></div>
+                <div>${pct}%</div>
+              </div>
+            `;
+          })
+          .join("");
+      }
+
+      function reviewMarkup() {
+        return state.answers
+          .map((answer, index) => {
+            const question = getQuestionById(answer.id);
+            const userChoice = question.options[answer.selectedIndex] ?? "No answer";
+            const correctChoice = question.options[question.answer];
+            return `
+              <div class="stat" style="margin-bottom: 0.8rem;">
+                <strong style="font-size:1rem;">${index + 1}. ${question.id} ${answer.correct ? "<span class='good-text'>correct</span>" : "<span class='warning'>incorrect</span>"}</strong>
+                <div>${question.question}</div>
+                <div class="muted">Your answer: ${userChoice}</div>
+                <div class="muted">Correct answer: ${correctChoice}</div>
+                <div class="muted">Topic: ${answer.topic} | Difficulty: ${answer.difficulty} | Time: ${answer.timeTaken.toFixed(2)}s</div>
+              </div>
+            `;
+          })
+          .join("");
+      }
+
+      function finishQuiz() {
+        clearInterval(state.timerHandle);
+        els.quizPanel.classList.remove("active");
+        els.resultsPanel.classList.add("active");
+
+        const percent = Math.round((state.score / state.selectedCount) * 100);
+        const avgTime =
+          state.answers.reduce((sum, item) => sum + item.timeTaken, 0) / Math.max(state.answers.length, 1);
+        const hesitantCount = state.answers.filter((item) => item.hesitant).length;
+
+        els.resultsSummary.textContent =
+          `You completed ${state.selectedCount} questions with ${state.score} correct. The quiz adapted topic weighting toward weaker areas and kept question IDs unique to avoid duplicate edge cases.`;
+
+        els.resultHero.innerHTML = `
+          <div class="stat"><span>Accuracy</span><strong>${percent}%</strong></div>
+          <div class="stat"><span>Correct</span><strong>${state.score}/${state.selectedCount}</strong></div>
+          <div class="stat"><span>Average time</span><strong>${avgTime.toFixed(2)}s</strong></div>
+          <div class="stat"><span>Hesitant answers</span><strong>${hesitantCount}</strong></div>
+          <div class="stat"><span>Blitz score</span><strong>${state.mode === "blitz" ? state.blitzScore.toFixed(2) : "N/A"}</strong></div>
+        `;
+
+        els.topicMastery.innerHTML = topicMasteryMarkup();
+        els.reviewList.innerHTML = reviewMarkup();
+        localStorage.removeItem(STORAGE_KEY);
+      }
+
+      function persistState() {
+        const data = serializeState();
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      }
+
+      function serializeState() {
+        return {
+          selectedCount: state.selectedCount,
+          mode: state.mode,
+          requestedStartDifficulty: state.requestedStartDifficulty,
+          queue: state.queue,
+          currentIndex: state.currentIndex,
+          answers: state.answers,
+          score: state.score,
+          blitzScore: state.blitzScore,
+          streak: state.streak,
+          hardUnlocked: state.hardUnlocked,
+          currentQuestionId: state.currentQuestionId,
+          topicStats
+        };
+      }
+
+      function hydrateState(data) {
+        initTopicStats();
+        state.selectedCount = Math.min(Math.max(Number(data.selectedCount) || 20, 5), 50);
+        state.mode = data.mode === "blitz" ? "blitz" : "standard";
+        state.requestedStartDifficulty = ["easy", "medium", "hard"].includes(data.requestedStartDifficulty)
+          ? data.requestedStartDifficulty
+          : "easy";
+        state.queue = Array.isArray(data.queue) ? data.queue.filter((id) => getQuestionById(id)) : [];
+        state.currentIndex = Number(data.currentIndex) || 0;
+        state.answers = Array.isArray(data.answers) ? data.answers : [];
+        state.score = Number(data.score) || 0;
+        state.blitzScore = Number(data.blitzScore) || 0;
+        state.streak = Number(data.streak) || 0;
+        state.hardUnlocked = Boolean(data.hardUnlocked);
+        state.currentQuestionId = data.currentQuestionId || state.queue[state.currentIndex] || null;
+        state.usedIds = new Set(state.queue);
+        Object.entries(data.topicStats || {}).forEach(([topic, values]) => {
+          if (topicStats[topic]) {
+            topicStats[topic] = {
+              asked: Number(values.asked) || 0,
+              correct: Number(values.correct) || 0,
+              totalTime: Number(values.totalTime) || 0,
+              hesitant: Number(values.hesitant) || 0
+            };
+          }
+        });
+        els.questionCount.value = state.selectedCount;
+        els.modeSelect.value = state.mode;
+        els.difficultySelect.value = state.requestedStartDifficulty;
+        els.resultsPanel.classList.remove("active");
+        els.quizPanel.classList.add("active");
+        renderQuestion();
+      }
+
+      function startQuiz() {
+        initTopicStats();
+        els.resultsPanel.classList.remove("active");
+        state.selectedCount = Math.min(Math.max(Number(els.questionCount.value) || 20, 5), 50);
+        state.mode = els.modeSelect.value === "blitz" ? "blitz" : "standard";
+        state.requestedStartDifficulty = els.difficultySelect.value;
+        state.currentIndex = 0;
+        state.answers = [];
+        state.score = 0;
+        state.blitzScore = 0;
+        state.streak = 0;
+        state.hardUnlocked = false;
+        state.currentQuestionId = null;
+        state.answeredCurrent = false;
+        state.queue = generateQueue(state.selectedCount);
+        els.quizPanel.classList.add("active");
+        persistState();
+        renderQuestion();
+      }
+
+      function resumeLocalState() {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) {
+          window.alert("No local saved progress found.");
+          return;
+        }
+        try {
+          hydrateState(JSON.parse(raw));
+        } catch (error) {
+          window.alert("Saved progress is corrupted.");
+        }
+      }
+
+      function exportStateToFile() {
+        const blob = new Blob([JSON.stringify(serializeState(), null, 2)], {
+          type: "text/plain"
+        });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "chapter-6-7-quiz-save.dat";
+        link.click();
+        URL.revokeObjectURL(url);
+      }
+
+      function clearSavedProgress() {
+        localStorage.removeItem(STORAGE_KEY);
+        els.resumeFile.value = "";
+        window.alert("Local saved progress cleared.");
+      }
+
+      function importFile(file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          try {
+            const data = JSON.parse(reader.result);
+            hydrateState(data);
+          } catch (error) {
+            window.alert("Could not read that save file.");
+          }
+        };
+        reader.readAsText(file);
+      }
+
+      els.startBtn.addEventListener("click", startQuiz);
+      els.resumeLocalBtn.addEventListener("click", resumeLocalState);
+      els.exportBtn.addEventListener("click", exportStateToFile);
+      els.resetBtn.addEventListener("click", clearSavedProgress);
+      els.hintBtn.addEventListener("click", showHint);
+      els.saveBtn.addEventListener("click", persistState);
+      els.nextBtn.addEventListener("click", nextQuestion);
+      els.resumeFile.addEventListener("change", (event) => {
+        const [file] = event.target.files;
+        if (file) importFile(file);
+      });
+
+      initTopicStats();
+    </script>
+  </body>
+</html>

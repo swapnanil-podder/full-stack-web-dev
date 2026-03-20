@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .specific-font {
+        font-family: "Times New Roman";
+      }
+
+      .font-with-fallback {
+        font-family: "Times New Roman", Georgia;
+      }
+
+      .font-with-generic {
+        font-family: "Times New Roman", Georgia, serif;
+      }
+
+      .sans-serif {
+        font-family: Arial, Helventica, sans-serif;
+      }
+
+      .monospace {
+        font-family: "courier new", "courier", monospace;
+      }
+
+      .cursive {
+        font-family: "Brush Script", cursive;
+      }
+      .fantasy {
+        font-family: Papyrus,fantasy;
+      }
+    </style>
+  </head>
+  <body>
+    <p class="specific-font">Times New Roman</p>
+    <p class="font-with-fallback">Times New Roman and Georgia</p>
+    <p class="font-with-generic">Times New Roman and Georgia</p>
+    <p class="sans-serif">Arial, Helventica, sans-serif</p>
+    <p class="monospace">courier new, courier, monospace</p>
+    <p class="cursive">Brush Script or cursive</p>
+    <p class="fantasy">Papyrus,fantasy</p>
+  </body>
+</html>

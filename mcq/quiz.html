@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultimate Web Dev MCQ - Chapters 3, 4, 6 & 7</title>
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --secondary: #94a3b8;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text: #f1f5f9;
+            --border: #334155;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #1e40af;
+            color: white;
+            width: 100%;
+            padding: 1rem 0;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin: 2rem 0;
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border);
+        }
+
+        /* Learning Section */
+        #learning-section {
+            background: #1e3a8a;
+            border-left: 4px solid var(--primary);
+            padding: 1rem;
+            margin-bottom: 2rem;
+            color: #dbeafe;
+        }
+
+        .hidden { display: none !important; }
+
+        .progress-container {
+            width: 100%;
+            background-color: #334155;
+            border-radius: 10px;
+            margin: 1rem 0;
+            height: 20px;
+            overflow: hidden;
+            display: flex;
+        }
+
+        #progress-bar {
+            height: 100%;
+            background-color: var(--success);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .question-card {
+            margin-bottom: 2rem;
+        }
+
+        .difficulty-badge {
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .easy { background: #064e3b; color: #6ee7b7; }
+        .med { background: #78350f; color: #fcd34d; }
+        .hard { background: #7f1d1d; color: #fca5a5; }
+
+        .options-grid {
+            display: grid;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .option-btn {
+            background: #334155;
+            border: 2px solid var(--border);
+            padding: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s;
+            font-size: 1rem;
+            color: var(--text);
+        }
+
+        .option-btn:hover:not(:disabled) {
+            border-color: var(--primary);
+            background-color: #475569;
+        }
+
+        .option-btn.correct {
+            background-color: #065f46;
+            border-color: var(--success);
+        }
+
+        .option-btn.wrong {
+            background-color: #7f1d1d;
+            border-color: var(--danger);
+        }
+
+        .explanation-box {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: #1e3a8a;
+            border-radius: 8px;
+            border: 1px solid #3b82f6;
+            color: #dbeafe;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .comparison-table th, .comparison-table td {
+            border: 1px solid var(--border);
+            padding: 0.5rem;
+            text-align: left;
+        }
+
+        .comparison-table th { background-color: #334155; color: #f1f5f9; }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: opacity 0.2s;
+        }
+
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-secondary { background: var(--secondary); color: white; }
+
+        #timer {
+            font-weight: bold;
+            font-family: monospace;
+            font-size: 1.2rem;
+            color: var(--warning);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .stat-card {
+            background: #334155;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .mastery-list {
+            margin-top: 2rem;
+        }
+
+        .mastery-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .mastery-bar-outer {
+            width: 150px;
+            height: 10px;
+            background: #334155;
+            border-radius: 5px;
+            margin-left: 1rem;
+        }
+
+        .mastery-bar-inner {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 5px;
+        }
+
+        input[type="number"] {
+            background: #334155;
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 0.5rem;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Mastery Quiz: Web Fundamentals</h1>
+</header>
+
+<div class="container" id="setup-screen">
+    <h2>Quiz Setup</h2>
+    <div id="learning-section">
+        <h3>🚀 New from Superfile: Tables, Forms & Multimedia</h3>
+        <ul>
+            <li><strong>Tables:</strong> Use <code>&lt;table&gt;</code>, <code>&lt;tr&gt;</code> (row), <code>&lt;th&gt;</code> (header), <code>&lt;td&gt;</code> (data). Use <code>colspan</code> to span multiple columns.</li>
+            <li><strong>Forms:</strong> <code>&lt;fieldset&gt;</code> groups related fields, <code>&lt;legend&gt;</code> provides a title for them. <code>&lt;label&gt;</code> should connect to an <code>&lt;input&gt;</code> via <code>for</code>/<code>id</code>.</li>
+            <li><strong>Multimedia:</strong> <code>&lt;audio&gt;</code> and <code>&lt;video&gt;</code> need the <code>controls</code> attribute to be usable. <code>&lt;iframe&gt;</code> embeds another webpage.</li>
+        </ul>
+    </div>
+    
+    <div style="margin: 2rem 0;">
+        <label for="question-count">How many questions do you want?</label>
+        <input type="number" id="question-count" value="50" min="5" max="50" style="padding: 0.5rem; width: 60px;">
+    </div>
+
+    <div style="display: flex; gap: 1rem;">
+        <button class="btn btn-primary" onclick="startQuiz(false)">Normal Mode</button>
+        <button class="btn btn-secondary" onclick="startQuiz(true)">⚡ Blitz Mode (Time-Based Score)</button>
+    </div>
+    
+    <div style="margin-top: 2rem; border-top: 1px solid #e2e8f0; padding-top: 1rem;">
+        <h3>Resume Progress</h3>
+        <p>Upload your <code>.txt</code> or <code>.dat</code> state file:</p>
+        <input type="file" id="state-upload" accept=".txt,.dat" onchange="loadState(event)">
+    </div>
+</div>
+
+<div class="container hidden" id="quiz-screen">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <span id="difficulty-display" class="difficulty-badge easy">Easy</span>
+            <span id="topic-display" style="margin-left: 1rem; color: var(--secondary); font-size: 0.9rem;">Topic</span>
+        </div>
+        <div id="timer">00:00</div>
+    </div>
+
+    <div class="progress-container">
+        <div id="progress-bar"></div>
+    </div>
+    <div style="text-align: right; font-size: 0.8rem; color: var(--secondary);" id="progress-text">Question 1/50</div>
+
+    <div id="question-container" class="question-card">
+        <h2 id="question-text">Question loading...</h2>
+        <div id="hint-box" class="hidden" style="color: var(--warning); font-style: italic; margin-bottom: 1rem;">
+            💡 Hint: <span id="hint-text"></span>
+        </div>
+        <button id="hint-btn" class="btn btn-secondary" style="padding: 0.3rem 0.6rem; font-size: 0.8rem;" onclick="showHint()">Need a Hint?</button>
+        
+        <div class="options-grid" id="options-container">
+            <!-- Options will be injected here -->
+        </div>
+    </div>
+
+    <div id="feedback-container" class="hidden">
+        <div id="explanation-box" class="explanation-box"></div>
+        <div id="distractor-comparison" class="hidden">
+            <h4>⚠️ Common Mistake Comparison:</h4>
+            <div id="comparison-table-wrapper"></div>
+        </div>
+        <button class="btn btn-primary" style="margin-top: 1.5rem; width: 100%;" onclick="nextQuestion()">Next Question</button>
+    </div>
+
+    <div style="margin-top: 2rem; border-top: 1px solid #e2e8f0; padding-top: 1rem;">
+        <button class="btn btn-secondary" style="font-size: 0.8rem;" onclick="saveState()">Save Progress</button>
+    </div>
+</div>
+
+<div class="container hidden" id="result-screen">
+    <h2>Quiz Completed! 🎉</h2>
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div style="font-size: 2rem; font-weight: bold;" id="final-score">0</div>
+            <div>Final Score</div>
+        </div>
+        <div class="stat-card">
+            <div style="font-size: 2rem; font-weight: bold;" id="accuracy-stat">0%</div>
+            <div>Accuracy</div>
+        </div>
+        <div class="stat-card">
+            <div style="font-size: 2rem; font-weight: bold;" id="avg-time-stat">0s</div>
+            <div>Avg. Time / Q</div>
+        </div>
+    </div>
+
+    <h3>Topic Mastery</h3>
+    <div class="mastery-list" id="mastery-list">
+        <!-- Topic mastery will be injected here -->
+    </div>
+
+    <button class="btn btn-primary" style="margin-top: 2rem; width: 100%;" onclick="location.reload()">Start New Quiz</button>
+</div>
+
+<script>
+    // --- QUESTION BANK (50 Questions) ---
+    const QUESTIONS = [
+        // CHAPTER 3: HTML BASICS
+        {
+            id: "C3-01", difficulty: "easy", topic: "HTML Structure",
+            question: "Which tag is considered the 'root' element of an HTML page?",
+            options: ["<head>", "<body>", "<html>", "<!DOCTYPE>"],
+            answer: 2, hint: "It wraps everything except the doctype declaration.",
+            explanation: "The <html> element represents the root of an HTML document.",
+            distractorInfo: {
+                3: { feature: "Scope", correct: "Contains all elements", distractor: "Only tells the browser what version of HTML is being used" }
+            }
+        },
+        {
+            id: "C3-02", difficulty: "easy", topic: "Text Elements",
+            question: "Which heading tag represents the largest (main) heading?",
+            options: ["<h6>", "<h0>", "<h10>", "<h1>"],
+            answer: 3, hint: "It's the first in the numerical hierarchy.",
+            explanation: "<h1> is the highest level heading, while <h6> is the lowest.",
+            distractorInfo: {
+                0: { feature: "Hierarchy", correct: "Top-level heading", distractor: "Smallest/lowest-level heading" }
+            }
+        },
+        {
+            id: "C3-03", difficulty: "easy", topic: "Formatting",
+            question: "Which tag is used to create a line break?",
+            options: ["<lb>", "<break>", "<br>", "<hr>"],
+            answer: 2, hint: "It is an empty tag (no closing tag needed).",
+            explanation: "<br> produces a line break in text (carriage-return).",
+            distractorInfo: {
+                3: { feature: "Visual", correct: "Invisible break", distractor: "Thematic break (Horizontal Rule line)" }
+            }
+        },
+        {
+            id: "C3-04", difficulty: "med", topic: "Formatting",
+            question: "How do you display text exactly as it is written in the HTML file, including spaces and line breaks?",
+            options: ["<p>", "<code>", "<pre>", "<text>"],
+            answer: 2, hint: "Think 'preformatted'.",
+            explanation: "The <pre> tag defines preformatted text, which is displayed in a fixed-width font and preserves spaces and breaks.",
+            distractorInfo: {
+                1: { feature: "Purpose", correct: "Preserves layout", distractor: "Used for short code snippets, does not preserve line breaks" }
+            }
+        },
+        {
+            id: "C3-05", difficulty: "easy", topic: "Comments",
+            question: "What is the correct syntax for an HTML comment?",
+            options: ["// comment", "/* comment */", "<!-- comment -->", "' comment"],
+            answer: 2, hint: "It uses angle brackets and dashes.",
+            explanation: "HTML comments start with <!-- and end with -->.",
+            distractorInfo: {
+                1: { feature: "Language", correct: "HTML syntax", distractor: "CSS/JS multi-line comment syntax" }
+            }
+        },
+        {
+            id: "C3-06", difficulty: "med", topic: "Links",
+            question: "Which attribute is used in the <a> tag to open a link in a new tab?",
+            options: ["target='_new'", "target='_blank'", "open='new'", "rel='external'"],
+            answer: 1, hint: "Think of a 'blank' page.",
+            explanation: "target='_blank' tells the browser to open the linked document in a new window or tab.",
+            distractorInfo: {
+                0: { feature: "Value", correct: "_blank (Standard)", distractor: "_new (Not standard for new tabs, though often used)" }
+            }
+        },
+        {
+            id: "C3-07", difficulty: "med", topic: "Formatting",
+            question: "Which tag would you use for 'Strong Importance' rather than just visual bolding?",
+            options: ["<b>", "<strong>", "<i>", "<em>"],
+            answer: 1, hint: "Screen readers emphasize this more than just 'b'.",
+            explanation: "<strong> indicates that its contents have strong importance, while <b> is just for visual styling.",
+            distractorInfo: {
+                0: { feature: "Semantic", correct: "High importance", distractor: "Purely stylistic bolding" }
+            }
+        },
+        {
+            id: "C3-08", difficulty: "easy", topic: "Links",
+            question: "How do you create a link that opens the user's email client?",
+            options: ["<a href='mailto:email@example.com'>", "<a href='email:email@example.com'>", "<a to='email@example.com'>", "<a action='mail'>"],
+            answer: 0, hint: "The prefix starts with 'mail'.",
+            explanation: "The 'mailto:' protocol is used for email links.",
+            distractorInfo: {
+                1: { feature: "Protocol", correct: "mailto:", distractor: "email: (Incorrect protocol)" }
+            }
+        },
+        {
+            id: "C3-09", difficulty: "easy", topic: "Images",
+            question: "Which attribute of the <img> tag is vital for accessibility (screen readers)?",
+            options: ["src", "title", "alt", "width"],
+            answer: 2, hint: "Short for 'alternative text'.",
+            explanation: "The 'alt' attribute provides alternative information for an image if a user for some reason cannot view it.",
+            distractorInfo: {
+                1: { feature: "Accessibility", correct: "Read by screen readers if image fails", distractor: "Shown as a tooltip on hover" }
+            }
+        },
+        {
+            id: "C3-10", difficulty: "med", topic: "Metadata",
+            question: "Which meta tag is crucial for making your website responsive on mobile devices?",
+            options: ["charset", "viewport", "description", "keywords"],
+            answer: 1, hint: "It controls how the site is viewed.",
+            explanation: "The viewport meta tag <meta name='viewport' content='width=device-width, initial-scale=1.0'> is essential for mobile responsiveness.",
+            distractorInfo: {
+                0: { feature: "Function", correct: "Responsive scaling", distractor: "Character encoding (UTF-8)" }
+            }
+        },
+        {
+            id: "C3-11", difficulty: "med", topic: "Quotations",
+            question: "Which tag is best suited for long, multi-line quotations that require a citation?",
+            options: ["<q>", "<blockquote>", "<cite>", "<quote>"],
+            answer: 1, hint: "It's a block-level element.",
+            explanation: "<blockquote> is used for sections that are quoted from another source and are usually indented.",
+            distractorInfo: {
+                0: { feature: "Element Type", correct: "Block-level (long quotes)", distractor: "Inline-level (short quotes)" }
+            }
+        },
+        {
+            id: "C3-12", difficulty: "hard", topic: "Formatting",
+            question: "What is the purpose of the <bdo> tag?",
+            options: ["Bold text offset", "Bidirectional Override", "Body display options", "Background data object"],
+            answer: 1, hint: "It relates to text direction (LTR vs RTL).",
+            explanation: "The <bdo> (Bidirectional Override) tag is used to override the current text direction.",
+            distractorInfo: {
+                2: { feature: "Meaning", correct: "Text direction", distractor: "None (fabricated option)" }
+            }
+        },
+
+        // CHAPTER 4: HTML STRUCTURE
+        {
+            id: "C4-01", difficulty: "easy", topic: "Block vs Inline",
+            question: "Which of these is a typical 'Block' element?",
+            options: ["<span>", "<a>", "<div>", "<strong>"],
+            answer: 2, hint: "It starts on a new line and takes full width.",
+            explanation: "<div> is a block-level element, while span, a, and strong are inline.",
+            distractorInfo: {
+                0: { feature: "Flow", correct: "Starts new line", distractor: "Stays within the line (Inline)" }
+            }
+        },
+        {
+            id: "C4-02", difficulty: "med", topic: "Lists",
+            question: "In a 'Description List', which tag is used for the 'Description Term'?",
+            options: ["<dl>", "<dd>", "<dt>", "<li>"],
+            answer: 2, hint: "D_ T_.",
+            explanation: "<dt> stands for Description Term, and <dd> stands for Description Data (the definition).",
+            distractorInfo: {
+                1: { feature: "Role", correct: "The term/title", distractor: "The description/value" }
+            }
+        },
+        {
+            id: "C4-03", difficulty: "easy", topic: "Lists",
+            question: "What tag is used for an 'Unordered List' (bullet points)?",
+            options: ["<ol>", "<ul>", "<li>", "<list>"],
+            answer: 1, hint: "U_ L_.",
+            explanation: "<ul> creates an unordered list.",
+            distractorInfo: {
+                0: { feature: "Marker", correct: "Bullets", distractor: "Numbers/Letters (Ordered)" }
+            }
+        },
+        {
+            id: "C4-04", difficulty: "med", topic: "Entities",
+            question: "Which HTML entity represents the 'less than' symbol (<)?",
+            options: ["&less;", "&lt;", "&gt;", "&amp;"],
+            answer: 1, hint: "lt stands for 'less than'.",
+            explanation: "&lt; is used to display the < symbol without the browser interpreting it as a tag start.",
+            distractorInfo: {
+                2: { feature: "Symbol", correct: "< (Less than)", distractor: "> (Greater than)" }
+            }
+        },
+        {
+            id: "C4-05", difficulty: "med", topic: "Semantics",
+            question: "Which semantic tag is used specifically for the primary navigation links of a page?",
+            options: ["<header>", "<nav>", "<section>", "<aside>"],
+            answer: 1, hint: "Short for navigation.",
+            explanation: "The <nav> element is intended for major blocks of navigation links.",
+            distractorInfo: {
+                0: { feature: "Scope", correct: "Navigation specific", distractor: "General introductory content (Header)" }
+            }
+        },
+        {
+            id: "C4-06", difficulty: "med", topic: "Semantics",
+            question: "Which tag should be used for content that is 'self-contained' and could be reused elsewhere (like a blog post)?",
+            options: ["<section>", "<article>", "<div>", "<aside>"],
+            answer: 1, hint: "Think of a newspaper 'article'.",
+            explanation: "The <article> element represents a complete, self-contained composition (blog post, news article, etc).",
+            distractorInfo: {
+                0: { feature: "Semantics", correct: "Independently distributable", distractor: "Generic thematic grouping" }
+            }
+        },
+        {
+            id: "C4-07", difficulty: "easy", topic: "Images",
+            question: "Which tag is used to provide a caption for a <figure> element?",
+            options: ["<caption>", "<title>", "<figcaption>", "<desc>"],
+            answer: 2, hint: "It combines 'fig' and 'caption'.",
+            explanation: "<figcaption> provides a caption for its parent <figure> element.",
+            distractorInfo: {
+                0: { feature: "Usage", correct: "Used with images/figures", distractor: "Used with <table> elements" }
+            }
+        },
+        {
+            id: "C4-08", difficulty: "med", topic: "Entities",
+            question: "What does '&nbsp;' stand for in HTML?",
+            options: ["New Basic Space", "Non-Breaking Space", "Normal Block Space", "Next Batch Space"],
+            answer: 1, hint: "It prevents a line break between two words.",
+            explanation: "&nbsp; creates a space that will not break into a new line.",
+            distractorInfo: {
+                2: { feature: "Function", correct: "Prevents wrapping", distractor: "Just a regular space" }
+            }
+        },
+        {
+            id: "C4-09", difficulty: "hard", topic: "Structure",
+            question: "If you have a sidebar containing related links that aren't part of the main content flow, which tag is best?",
+            options: ["<section>", "<footer>", "<aside>", "<nav>"],
+            answer: 2, hint: "It is 'aside' from the main content.",
+            explanation: "The <aside> element is for content tangentially related to the content around it.",
+            distractorInfo: {
+                0: { feature: "Relationship", correct: "Indirectly related", distractor: "Direct thematic grouping" }
+            }
+        },
+        {
+            id: "C4-10", difficulty: "med", topic: "Lists",
+            question: "Can you nest a <ul> inside an <li> of an <ol>?",
+            options: ["Yes", "No", "Only if there are no other items", "Only in HTML4"],
+            answer: 0, hint: "HTML allows very flexible nesting for lists.",
+            explanation: "Lists can be nested inside list items of other lists to any depth.",
+            distractorInfo: {
+                1: { feature: "Nesting", correct: "Allowed", distractor: "Not allowed (False)" }
+            }
+        },
+        {
+            id: "C4-11", difficulty: "hard", topic: "Semantics",
+            question: "Which of these is NOT a semantic element?",
+            options: ["<footer>", "<main>", "<span>", "<header>"],
+            answer: 2, hint: "It's a generic inline container with no meaning.",
+            explanation: "<span> and <div> are non-semantic; they don't tell the browser anything about the content's meaning.",
+            distractorInfo: {
+                1: { feature: "Meaning", correct: "Has none (Generic)", distractor: "Specifies the primary content" }
+            }
+        },
+        {
+            id: "C4-12", difficulty: "hard", topic: "Structure",
+            question: "Which attribute can be used in an <ol> tag to make the list count backwards?",
+            options: ["reverse", "reversed", "backwards", "desc"],
+            answer: 1, hint: "It's a boolean attribute.",
+            explanation: "The 'reversed' attribute in <ol> makes the list count down instead of up.",
+            distractorInfo: {
+                0: { feature: "Attribute Name", correct: "reversed (Standard)", distractor: "reverse (Incorrect suffix)" }
+            }
+        },
+        {
+            id: "C4-13", difficulty: "hard", topic: "Hybrid",
+            question: "If a <div> contains a <span>, and you want the <span> to take the full width of the container, what must you change?",
+            options: ["Change <span> to a block element", "Change <div> to an inline element", "Add more text to <span>", "You cannot do this"],
+            answer: 0, hint: "Inline elements only take as much space as needed.",
+            explanation: "You would need to use CSS (display: block) or use a block-level tag instead of <span>.",
+            distractorInfo: {
+                1: { feature: "Behavior", correct: "Change child to block", distractor: "Changing parent to inline won't help" }
+            }
+        },
+
+        // SUPERFILE EXCLUSIVES (Tables, Forms, Multimedia)
+        {
+            id: "S-01", difficulty: "med", topic: "Tables",
+            question: "Which attribute is used to make a table cell span across 3 columns?",
+            options: ["rowspan='3'", "colspan='3'", "width='3'", "grid-span='3'"],
+            answer: 1, hint: "Think of columns.",
+            explanation: "colspan is used to merge columns horizontally.",
+            distractorInfo: {
+                0: { feature: "Direction", correct: "Horizontal (Columns)", distractor: "Vertical (Rows)" }
+            }
+        },
+        {
+            id: "S-02", difficulty: "hard", topic: "Forms",
+            question: "Which attribute in an <input> tag is used to associate it with a <label>'s 'for' attribute?",
+            options: ["name", "class", "id", "type"],
+            answer: 2, hint: "The 'id' must match the label's 'for'.",
+            explanation: "The 'for' attribute of a label must equal the 'id' of the related element to bind them for accessibility.",
+            distractorInfo: {
+                0: { feature: "Function", correct: "Binding ID", distractor: "Identifier used during form submission" }
+            }
+        },
+        {
+            id: "S-03", difficulty: "med", topic: "Forms",
+            question: "Which tag is used to create a drop-down selection list?",
+            options: ["<input type='dropdown'>", "<list>", "<select>", "<datalist>"],
+            answer: 2, hint: "You 'select' an option.",
+            explanation: "The <select> element is used to create a drop-down list.",
+            distractorInfo: {
+                3: { feature: "Input Type", correct: "Dropdown container", distractor: "Used for autocomplete suggestions, not a pure dropdown" }
+            }
+        },
+        {
+            id: "S-04", difficulty: "hard", topic: "Multimedia",
+            question: "Which attribute is needed in <video> to ensure the user can play/pause the video?",
+            options: ["play", "autoplay", "controls", "buttons"],
+            answer: 2, hint: "Without this, the video UI is hidden.",
+            explanation: "The 'controls' attribute adds the play/pause/volume UI.",
+            distractorInfo: {
+                1: { feature: "Action", correct: "User control", distractor: "Automatic play (doesn't provide UI)" }
+            }
+        },
+        {
+            id: "S-05", difficulty: "med", topic: "Forms",
+            question: "Which input type is best for selecting exactly one option from a small group?",
+            options: ["checkbox", "radio", "range", "text"],
+            answer: 1, hint: "Like old car radio buttons.",
+            explanation: "Radio buttons are for selecting one option; checkboxes are for multiple.",
+            distractorInfo: {
+                0: { feature: "Selection", correct: "Exclusive (Only one)", distractor: "Inclusive (Can pick multiple)" }
+            }
+        },
+
+        // CHAPTER 6: CSS BASICS
+        {
+            id: "C6-01", difficulty: "easy", topic: "CSS Basics",
+            question: "Which CSS property is used to change the background color of an element?",
+            options: ["color", "bg-color", "background-color", "fill"],
+            answer: 2, hint: "It starts with 'background-'.",
+            explanation: "background-color sets the background.",
+            distractorInfo: {
+                0: { feature: "Target", correct: "Background", distractor: "Text color" }
+            }
+        },
+        {
+            id: "C6-02", difficulty: "med", topic: "CSS Units",
+            question: "Which unit is relative to the font-size of the element's parent?",
+            options: ["px", "rem", "em", "vh"],
+            answer: 2, hint: "Relative to parent.",
+            explanation: "'em' is relative to the parent font-size, while 'rem' is relative to the root (html).",
+            distractorInfo: {
+                1: { feature: "Reference", correct: "Parent font size", distractor: "Root font size" }
+            }
+        },
+        {
+            id: "C6-03", difficulty: "easy", topic: "Text Styling",
+            question: "Which property is used to make text bold?",
+            options: ["font-style", "font-weight", "text-decoration", "font-bold"],
+            answer: 1, hint: "Think of the 'weight' of the font.",
+            explanation: "font-weight: bold; makes the text thicker.",
+            distractorInfo: {
+                0: { feature: "Type", correct: "Thickness (Weight)", distractor: "Slant (Italic/Style)" }
+            }
+        },
+        {
+            id: "C6-04", difficulty: "med", topic: "Spacing",
+            question: "Which property controls the space between the border and the content inside an element?",
+            options: ["margin", "padding", "border-spacing", "gap"],
+            answer: 1, hint: "Inside the box.",
+            explanation: "Padding is internal space; Margin is external space.",
+            distractorInfo: {
+                0: { feature: "Location", correct: "Inside border", distractor: "Outside border" }
+            }
+        },
+        {
+            id: "C6-05", difficulty: "med", topic: "Text Styling",
+            question: "How do you capitalize only the first letter of every word in CSS?",
+            options: ["text-transform: uppercase", "text-transform: capitalize", "text-style: initial", "font-variant: small-caps"],
+            answer: 1, hint: "You want to 'capitalize' the words.",
+            explanation: "text-transform: capitalize; targets the first letter of each word.",
+            distractorInfo: {
+                0: { feature: "Transformation", correct: "First letter only", distractor: "All letters (UPPERCASE)" }
+            }
+        },
+        {
+            id: "C6-06", difficulty: "easy", topic: "Border",
+            question: "What is the correct shorthand for a 2px solid red border?",
+            options: ["border: solid red 2px;", "border: 2px solid red;", "border: red 2px solid;", "All of the above"],
+            answer: 3, hint: "The order of shorthand values for 'border' doesn't matter much.",
+            explanation: "For the 'border' shorthand, the width, style, and color can be in any order.",
+            distractorInfo: {}
+        },
+        {
+            id: "C6-07", difficulty: "med", topic: "Text Styling",
+            question: "Which property is used to remove the underline from a link?",
+            options: ["text-style: none", "text-underline: none", "text-decoration: none", "font-decoration: none"],
+            answer: 2, hint: "Underlines are a type of 'decoration'.",
+            explanation: "text-decoration: none; removes underlines.",
+            distractorInfo: {
+                0: { feature: "Property Name", correct: "text-decoration", distractor: "text-style (doesn't exist for this purpose)" }
+            }
+        },
+        {
+            id: "C6-08", difficulty: "hard", topic: "CSS Units",
+            question: "What does '100vh' represent?",
+            options: ["100% of the viewport width", "100% of the viewport height", "100 virtual horizontal pixels", "100 value height"],
+            answer: 1, hint: "vh stands for Viewport Height.",
+            explanation: "100vh is equal to 100% of the current viewport's height.",
+            distractorInfo: {
+                0: { feature: "Axis", correct: "Vertical (Height)", distractor: "Horizontal (Width)" }
+            }
+        },
+
+        // CHAPTER 7: CSS SELECTORS
+        {
+            id: "C7-01", difficulty: "easy", topic: "Selectors",
+            question: "Which selector is used to target an element with a specific ID?",
+            options: [".my-id", "#my-id", "*my-id", "id:my-id"],
+            answer: 1, hint: "Think of a hashtag.",
+            explanation: "# is for ID, . is for Class.",
+            distractorInfo: {
+                0: { feature: "Identifier Type", correct: "ID (#)", distractor: "Class (.)" }
+            }
+        },
+        {
+            id: "C7-02", difficulty: "med", topic: "Pseudo-classes",
+            question: "Which pseudo-class targets an element when the user's mouse is over it?",
+            options: [":active", ":focus", ":hover", ":visited"],
+            answer: 2, hint: "You 'hover' over it.",
+            explanation: ":hover applies when the cursor is over the element.",
+            distractorInfo: {
+                0: { feature: "State", correct: "Mouse over", distractor: "Clicked/Being pressed" }
+            }
+        },
+        {
+            id: "C7-03", difficulty: "med", topic: "Pseudo-classes",
+            question: "How do you target the very first item in a list using a pseudo-class?",
+            options: [":first", ":start", ":first-child", ":nth-child(0)"],
+            answer: 2, hint: "It is the 'first child' of the list.",
+            explanation: ":first-child targets an element that is the first child of its parent.",
+            distractorInfo: {
+                3: { feature: "Index", correct: "1-based index (:nth-child(1))", distractor: "Invalid index (0)" }
+            }
+        },
+        {
+            id: "C7-04", difficulty: "hard", topic: "Pseudo-elements",
+            question: "Which pseudo-element can be used to insert content BEFORE an element's actual content?",
+            options: [":before", "::before", ":front", "::start"],
+            answer: 1, hint: "Modern CSS uses double colons for pseudo-elements.",
+            explanation: "::before is a pseudo-element that inserts content before an element.",
+            distractorInfo: {
+                0: { feature: "Syntax", correct: "Double colon (Modern standard)", distractor: "Single colon (Older syntax, still works but less preferred)" }
+            }
+        },
+        {
+            id: "C7-05", difficulty: "hard", topic: "Attribute Selectors",
+            question: "Which selector targets all <a> tags whose 'href' starts with 'https'?",
+            options: ["a[href='https']", "a[href*='https']", "a[href^='https']", "a[href$='https']"],
+            answer: 2, hint: "The 'caret' symbol (^) means 'starts with'.",
+            explanation: "^= means starts with, *= means contains, $= means ends with.",
+            distractorInfo: {
+                3: { feature: "Match Logic", correct: "Starts with (^=)", distractor: "Ends with ($=)" }
+            }
+        },
+        {
+            id: "C7-06", difficulty: "hard", topic: "Attribute Selectors",
+            question: "What does the selector '[lang|=\"en\"]' match?",
+            options: ["Any element with 'en' anywhere in the lang attribute", "Elements where lang is 'en' or starts with 'en-'", "Elements where lang ends with 'en'", "Elements where lang is exactly 'en'"],
+            answer: 1, hint: "The 'pipe' (|) is for hyphen-separated lists (like language codes).",
+            explanation: "| = matches the exact value or the value followed by a hyphen.",
+            distractorInfo: {
+                0: { feature: "Match Detail", correct: "Prefix match with hyphen", distractor: "Contains anywhere (*=)" }
+            }
+        },
+        {
+            id: "C7-07", difficulty: "med", topic: "Selectors",
+            question: "Which selector targets ALL elements on the page?",
+            options: ["all", ".all", "*", "#all"],
+            answer: 2, hint: "The universal selector.",
+            explanation: "* is the universal selector.",
+            distractorInfo: {}
+        },
+        {
+            id: "C7-08", difficulty: "hard", topic: "Pseudo-classes",
+            question: "Which selector targets every even list item?",
+            options: ["li:nth-child(even)", "li:nth-child(2n)", "li:even", "Both A and B"],
+            answer: 3, hint: "even and 2n are equivalent.",
+            explanation: ":nth-child(even) and :nth-child(2n) both target even elements.",
+            distractorInfo: {
+                2: { feature: "Syntax", correct: "Standard :nth-child", distractor: ":even (jQuery style, not standard CSS)" }
+            }
+        },
+        {
+            id: "C7-09", difficulty: "med", topic: "Selectors",
+            question: "In CSS, what is the difference between external and internal styles?",
+            options: ["Internal is in a .css file, External is in <style>", "Internal is in <style>, External is in a .css file", "External is only for mobile", "There is no difference"],
+            answer: 1, hint: "External means 'outside' the HTML file.",
+            explanation: "Internal styles are in the <head> using <style> tags; external styles are in a separate .css file linked via <link>.",
+            distractorInfo: {
+                0: { feature: "Location", correct: "Internal (In-file)", distractor: "External (In-file - WRONG)" }
+            }
+        },
+        {
+            id: "C7-10", difficulty: "hard", topic: "Hybrid",
+            question: "If an element has an ID and a Class, and both have conflicting color styles, which one wins?",
+            options: ["The Class", "The ID", "The one written last in CSS", "The one closer to the top of the file"],
+            answer: 1, hint: "Specificity: ID > Class > Element.",
+            explanation: "IDs have higher specificity than classes.",
+            distractorInfo: {
+                2: { feature: "Specificity", correct: "ID wins regardless of order", distractor: "Cascade order (only applies if specificity is equal)" }
+            }
+        }
+    ];
+
+    // --- STATE MANAGEMENT ---
+    let state = {
+        quizStarted: false,
+        blitzMode: false,
+        currentQuestionIndex: 0,
+        score: 0,
+        streak: 0,
+        unlockedDifficulty: 'easy', // easy, med, hard
+        history: [], // { questionId, correct, timeTaken, distractorUsed }
+        topicStats: {}, // { topic: { correct: 0, total: 0 } }
+        startTime: null,
+        questionStartTime: null,
+        selectedQuestions: []
+    };
+
+    function startQuiz(blitz) {
+        state.blitzMode = blitz;
+        const count = parseInt(document.getElementById('question-count').value) || 50;
+        
+        // Prepare questions: shuffle and pick 'count'
+        // But we also need to respect progressive difficulty.
+        // Initially, we only pick from 'easy'.
+        state.selectedQuestions = shuffleArray([...QUESTIONS]).slice(0, count);
+        
+        state.quizStarted = true;
+        state.startTime = Date.now();
+        state.currentQuestionIndex = 0;
+        state.score = 0;
+        state.streak = 0;
+        state.history = [];
+        state.topicStats = {};
+        state.unlockedDifficulty = 'easy';
+
+        document.getElementById('setup-screen').classList.add('hidden');
+        document.getElementById('quiz-screen').classList.remove('hidden');
+        
+        renderQuestion();
+        startTimer();
+    }
+
+    function renderQuestion() {
+        // Find next appropriate question based on unlocked difficulty and topic weighting
+        let question = findNextQuestion();
+        if (!question) {
+            finishQuiz();
+            return;
+        }
+
+        state.currentQuestion = question;
+        state.questionStartTime = Date.now();
+
+        document.getElementById('difficulty-display').innerText = question.difficulty;
+        document.getElementById('difficulty-display').className = `difficulty-badge ${question.difficulty}`;
+        document.getElementById('topic-display').innerText = question.topic;
+        document.getElementById('question-text').innerText = question.question;
+        document.getElementById('hint-text').innerText = question.hint;
+        document.getElementById('hint-box').classList.add('hidden');
+        document.getElementById('hint-btn').classList.remove('hidden');
+        document.getElementById('feedback-container').classList.add('hidden');
+        document.getElementById('distractor-comparison').classList.add('hidden');
+        
+        const optionsContainer = document.getElementById('options-container');
+        optionsContainer.innerHTML = '';
+        
+        question.options.forEach((opt, index) => {
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.innerText = opt;
+            btn.onclick = () => selectOption(index);
+            optionsContainer.appendChild(btn);
+        });
+
+        updateProgressBar();
+    }
+
+    function findNextQuestion() {
+        // Simple logic: return the question at current index
+        // But in a real "dynamic" system, we'd pick one from the pool that matches difficulty and struggling topics.
+        // For this 50-item requirement, we'll just go through the selected list but filter for 'unlocked' difficulty.
+        
+        // Re-ordering remaining questions to put 'unlocked' difficulty first
+        const remaining = state.selectedQuestions.slice(state.currentQuestionIndex);
+        
+        // Filter by difficulty (e.g., if med is unlocked, can do easy and med)
+        const diffRank = { 'easy': 1, 'med': 2, 'hard': 3 };
+        const unlockedRank = diffRank[state.unlockedDifficulty];
+        
+        let eligible = remaining.filter(q => diffRank[q.difficulty] <= unlockedRank);
+        
+        // If no eligible questions (all remaining are too hard), just unlock next difficulty
+        if (eligible.length === 0 && remaining.length > 0) {
+            state.unlockedDifficulty = unlockedRank === 1 ? 'med' : 'hard';
+            eligible = remaining;
+        }
+
+        // Topic Weighting: Prioritize topics with < 50% accuracy
+        eligible.sort((a, b) => {
+            const accA = getTopicAccuracy(a.topic);
+            const accB = getTopicAccuracy(b.topic);
+            return accA - accB; // lower accuracy comes first
+        });
+
+        return eligible[0];
+    }
+
+    function getTopicAccuracy(topic) {
+        const stats = state.topicStats[topic];
+        if (!stats || stats.total === 0) return 1; // neutral
+        return stats.correct / stats.total;
+    }
+
+    function selectOption(index) {
+        const q = state.currentQuestion;
+        const timeTaken = (Date.now() - state.questionStartTime) / 1000;
+        const isCorrect = index === q.answer;
+        
+        // Update stats
+        if (!state.topicStats[q.topic]) state.topicStats[q.topic] = { correct: 0, total: 0 };
+        state.topicStats[q.topic].total++;
+        
+        if (isCorrect) {
+            state.score++;
+            state.streak++;
+            state.topicStats[q.topic].correct++;
+            
+            // Progressive Difficulty Logic
+            if (state.unlockedDifficulty === 'easy' && state.streak >= 3) state.unlockedDifficulty = 'med';
+            if (state.unlockedDifficulty === 'med' && state.streak >= 6) state.unlockedDifficulty = 'hard';
+
+            // Blitz Mode Score
+            if (state.blitzMode) {
+                const diffMulti = { 'easy': 1, 'med': 1.5, 'hard': 2 }[q.difficulty];
+                const points = Math.max(10, Math.round((diffMulti * 100) / Math.max(1, timeTaken)));
+                state.score += (points - 1); // -1 because we already incremented score by 1
+            }
+        } else {
+            state.streak = 0;
+        }
+
+        state.history.push({ 
+            questionId: q.id, 
+            correct: isCorrect, 
+            timeTaken: timeTaken,
+            topic: q.topic
+        });
+
+        // UI Feedback
+        const btns = document.querySelectorAll('.option-btn');
+        btns.forEach((btn, i) => {
+            btn.disabled = true;
+            if (i === q.answer) btn.classList.add('correct');
+            if (i === index && !isCorrect) btn.classList.add('wrong');
+        });
+
+        document.getElementById('explanation-box').innerHTML = `<strong>${isCorrect ? '✅ Correct!' : '❌ Incorrect.'}</strong><br>${q.explanation}`;
+        
+        // Distractor Side-by-Side Comparison
+        if (!isCorrect && q.distractorInfo && q.distractorInfo[index]) {
+            const info = q.distractorInfo[index];
+            const tableHTML = `
+                <table class="comparison-table">
+                    <tr><th>Feature</th><th>Correct Answer</th><th>Your Selection</th></tr>
+                    <tr><td>${info.feature}</td><td>${info.correct}</td><td>${info.distractor}</td></tr>
+                </table>
+            `;
+            document.getElementById('comparison-table-wrapper').innerHTML = tableHTML;
+            document.getElementById('distractor-comparison').classList.remove('hidden');
+        }
+
+        document.getElementById('feedback-container').classList.remove('hidden');
+    }
+
+    function nextQuestion() {
+        // Remove the answered question from pool
+        const idx = state.selectedQuestions.findIndex(q => q.id === state.currentQuestion.id);
+        state.selectedQuestions.splice(idx, 1);
+        
+        if (state.selectedQuestions.length === 0) {
+            finishQuiz();
+        } else {
+            renderQuestion();
+        }
+    }
+
+    function showHint() {
+        document.getElementById('hint-box').classList.remove('hidden');
+        document.getElementById('hint-btn').classList.add('hidden');
+    }
+
+    function updateProgressBar() {
+        const total = parseInt(document.getElementById('question-count').value);
+        const completed = state.history.length;
+        const percent = (completed / total) * 100;
+        document.getElementById('progress-bar').style.width = `${percent}%`;
+        document.getElementById('progress-text').innerText = `Question ${completed + 1} / ${total}`;
+    }
+
+    let timerInterval;
+    function startTimer() {
+        clearInterval(timerInterval);
+        timerInterval = setInterval(() => {
+            const elapsed = Math.floor((Date.now() - state.startTime) / 1000);
+            const m = Math.floor(elapsed / 60).toString().padStart(2, '0');
+            const s = (elapsed % 60).toString().padStart(2, '0');
+            document.getElementById('timer').innerText = `${m}:${s}`;
+        }, 1000);
+    }
+
+    function finishQuiz() {
+        clearInterval(timerInterval);
+        document.getElementById('quiz-screen').classList.add('hidden');
+        document.getElementById('result-screen').classList.remove('hidden');
+
+        const total = state.history.length;
+        const correctCount = state.history.filter(h => h.correct).length;
+        const avgTime = (state.history.reduce((acc, h) => acc + h.timeTaken, 0) / total).toFixed(1);
+        
+        document.getElementById('final-score').innerText = state.score;
+        document.getElementById('accuracy-stat').innerText = `${Math.round((correctCount / total) * 100)}%`;
+        document.getElementById('avg-time-stat').innerText = `${avgTime}s`;
+
+        // Mastery List
+        const masteryList = document.getElementById('mastery-list');
+        masteryList.innerHTML = '';
+        
+        for (let topic in state.topicStats) {
+            const stats = state.topicStats[topic];
+            const percent = Math.round((stats.correct / stats.total) * 100);
+            
+            const div = document.createElement('div');
+            div.className = 'mastery-item';
+            div.innerHTML = `
+                <span>${topic}</span>
+                <div style="display: flex; align-items: center;">
+                    <span>${percent}%</span>
+                    <div class="mastery-bar-outer">
+                        <div class="mastery-bar-inner" style="width: ${percent}%"></div>
+                    </div>
+                </div>
+            `;
+            masteryList.appendChild(div);
+        }
+    }
+
+    // --- SAVE / RESUME ---
+    function saveState() {
+        const data = JSON.stringify(state);
+        const blob = new Blob([data], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `quiz_state_${new Date().getTime()}.txt`;
+        a.click();
+    }
+
+    function loadState(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                const loadedState = JSON.parse(e.target.result);
+                state = loadedState;
+                // Adjust timings since load
+                state.startTime = Date.now() - (state.history.reduce((acc, h) => acc + h.timeTaken, 0) * 1000);
+                
+                document.getElementById('setup-screen').classList.add('hidden');
+                document.getElementById('quiz-screen').classList.remove('hidden');
+                renderQuestion();
+                startTimer();
+            } catch (err) {
+                alert("Invalid state file.");
+            }
+        };
+        reader.readAsText(file);
+    }
+
+    // --- HELPERS ---
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+</script>
+
+</body>
+</html>
