@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Transition</title>
+    <style>
+      .box {
+        width: 200px;
+        height: 200px;
+        padding: 20px;
+        background-color: lightblue;
+        text-align: center;
+        border: 3px solid black;
+      }
+      .property-example{
+        transition-property: background-color, width;
+        transition-duration: 0.15s;
+        transition-delay: 0ms;
+        transition-timing-function: ease-in-out;
+      }
+      .property-example:hover {
+        background-color: lightcoral;
+        width: 300px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box property-example">Hover Over Me</div>
+
+  </body>
+</html>
